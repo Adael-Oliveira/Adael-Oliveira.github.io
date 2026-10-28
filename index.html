@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adael Oliveira · Desenvolvimento de Sistemas Web e Embarcados</title>
+<meta name="description" content="Sistemas sob medida, sites profissionais, automação, telas touch e soluções com ESP32. Do código ao circuito, para restaurantes, oficinas, comércio, escritórios e indústria.">
+<meta name="theme-color" content="#0e1a3a">
+<link rel="canonical" href="https://adael-oliveira.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Adael Oliveira · Sistemas Web e Embarcados">
+<meta property="og:description" content="Do código ao circuito: sistemas sob medida, sites, automação e equipamentos inteligentes para o seu negócio.">
+<meta property="og:url" content="https://adael-oliveira.github.io/">
+<meta property="og:image" content="https://adael-oliveira.github.io/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Adael Oliveira · Desenvolvimento de Sistemas","url":"https://adael-oliveira.github.io/","image":"https://adael-oliveira.github.io/assets/og.jpg","logo":"https://adael-oliveira.github.io/assets/icon-512.png","description":"Desenvolvimento de sistemas web e embarcados: sistemas sob medida, sites, automação e IoT.","areaServed":"BR","founder":{"@type":"Person","name":"Adael Oliveira","jobTitle":"Desenvolvedor de Sistemas Web e Embarcados","sameAs":["https://github.com/Adael-Oliveira"]}}
+</script>
+<style>
+:root{--navy:#0e1a3a;--navy2:#1b2a55;--blue:#1446c8;--blue2:#2f6bff;--sky:#e8efff;--line:#dfe6f5;--bg:#f6f8fd;--card:#fff;--muted:#5b6788;--ok:#1aa760;--radius:22px;--shadow:0 18px 48px rgba(14,26,58,.10),0 2px 0 rgba(14,26,58,.03)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+section{padding:96px 0}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.4vw,46px);font-weight:700;margin-top:10px}
+.sub{color:var(--muted);font-size:18px;max-width:640px;margin-top:14px}
+.blue{color:var(--blue)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;padding:15px 26px;border-radius:999px;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;border:0}
+.btn svg{width:20px;height:20px}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 12px 28px rgba(20,70,200,.30)}
+.btn-primary:hover{transform:translateY(-2px);background:#1039a8}
+.btn-ghost{background:#fff;color:var(--navy);border:2px solid var(--line)}
+.btn-ghost:hover{border-color:var(--blue2);transform:translateY(-2px)}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(246,248,253,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.scrolled{border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;letter-spacing:.02em}
+.brand img{height:34px;width:auto}
+.brand span b{color:var(--blue)}
+.menu{display:flex;gap:30px;font-size:15px;font-weight:500;color:var(--muted)}
+.menu a:hover{color:var(--blue)}
+.nav .btn{padding:11px 20px;font-size:14px}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);margin:5px auto;border-radius:2px;transition:.3s}
+/* hero */
+.hero{position:relative;padding:72px 0 96px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(20,70,200,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(20,70,200,.055) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 30% 40%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 30% 40%,#000 30%,transparent 75%)}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;z-index:0}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px 8px 10px;font-size:14px;font-weight:500;color:var(--muted);box-shadow:0 6px 18px rgba(14,26,58,.06)}
+.badge i{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(26,167,96,.18)}
+.hero h1{font-size:clamp(40px,6.4vw,72px);font-weight:700;margin-top:22px}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--muted);margin-top:20px;max-width:560px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.stats{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
+.stats div{font-size:14px;color:var(--muted)}
+.stats b{display:block;font-size:22px;color:var(--navy)}
+.phone{position:relative;justify-self:center;width:min(320px,100%);aspect-ratio:9/16;border-radius:38px;background:var(--navy);padding:10px;box-shadow:0 40px 80px rgba(14,26,58,.28);transform:rotate(2deg)}
+.phone video{width:100%;height:100%;object-fit:cover;border-radius:30px;background:#fff}
+.phone .sound{position:absolute;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;background:rgba(14,26,58,.85);color:#fff;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.phone .sound svg{width:22px;height:22px}
+.float{position:absolute;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:var(--shadow);font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.float .ic{width:36px;height:36px;border-radius:11px;background:var(--sky);display:flex;align-items:center;justify-content:center}
+.float svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.f1{left:-70px;top:16%}.f2{right:-60px;bottom:18%}
+/* duo */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.duo .card{padding:38px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(223,230,245,.7)}
+.duo h3{font-size:26px;margin:18px 0 10px}
+.duo p{color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tags span{font-size:13px;font-weight:500;background:var(--sky);color:var(--blue);padding:6px 12px;border-radius:999px}
+.code{background:var(--navy);border-radius:16px;padding:20px 22px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#a9bdf0;line-height:1.8}
+.code .k{color:#7fa6ff}.code .s{color:#8fe3b5}.code .c{color:#5e6f9e}
+/* services */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.svc{padding:30px;transition:transform .25s,box-shadow .25s}
+.svc:hover{transform:translateY(-4px);box-shadow:0 26px 60px rgba(14,26,58,.14)}
+.ico{width:58px;height:58px;border-radius:17px;background:var(--sky);display:flex;align-items:center;justify-content:center}
+.ico svg{width:30px;height:30px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-size:20px;margin:20px 0 8px}
+.svc p{color:var(--muted);font-size:15px}
+.svc ul{list-style:none;margin-top:16px;display:grid;gap:6px}
+.svc li{font-size:14px;color:var(--navy2);padding-left:22px;position:relative}
+.svc li::before{content:"";position:absolute;left:0;top:8px;width:12px;height:7px;border-left:2px solid var(--blue2);border-bottom:2px solid var(--blue2);transform:rotate(-45deg)}
+/* projects */
+.dark{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.dark .sub{color:#a9b5d6}
+.dark .kicker{color:#8fb0ff}
+.proj{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.pj{background:#16244b;border:1px solid #243566;border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+.pj:hover{transform:translateY(-4px);border-color:#3b5bb5}
+.pj .type{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8fb0ff}
+.pj h3{font-size:20px;margin:12px 0 8px}
+.pj p{color:#a9b5d6;font-size:15px;flex:1}
+.pj .tags span{background:#22336a;color:#cfdcff}
+.pj a.more{margin-top:18px;font-size:14px;font-weight:600;color:#8fb0ff;display:inline-flex;gap:6px;align-items:center}
+.pj a.more:hover{color:#fff}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:48px;counter-reset:s}
+.step{padding:28px;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);font-size:40px;font-weight:700;color:var(--sky);-webkit-text-stroke:1.5px var(--blue2);line-height:1}
+.step h3{font-size:19px;margin:16px 0 6px}
+.step p{font-size:15px;color:var(--muted)}
+/* segments */
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.chips span{background:#fff;border:2px solid var(--line);border-radius:999px;padding:12px 22px;font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:10px}
+.chips span::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue2)}
+/* contact */
+.contact{background:linear-gradient(135deg,#1446c8,#0e1a3a);color:#fff;border-radius:32px;padding:64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.contact::after{content:"";position:absolute;right:-120px;top:-120px;width:380px;height:380px;border-radius:50%;border:60px solid rgba(255,255,255,.06)}
+.contact h2{color:#fff}
+.contact p{color:#cfdcff;font-size:18px;margin-top:14px}
+.contact .links{display:grid;gap:14px;position:relative;z-index:1}
+.contact .btn{justify-content:center;padding:18px 26px;font-size:17px}
+.btn-white{background:#fff;color:var(--navy)}
+.btn-white:hover{transform:translateY(-2px)}
+.btn-line{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.35)}
+.btn-line:hover{border-color:#fff;transform:translateY(-2px)}
+footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot img{height:56px;width:auto}
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:60;width:60px;height:60px;border-radius:50%;background:#1fa855;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px rgba(31,168,85,.4);transition:transform .2s}
+.wa-float:hover{transform:scale(1.07)}
+.wa-float svg{width:30px;height:30px}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media (max-width:960px){
+ .hero-grid{grid-template-columns:1fr;text-align:left}
+ .phone{margin-top:20px;transform:none}
+ .f1{left:-10px}.f2{right:-10px}
+ .grid3,.proj{grid-template-columns:1fr 1fr}
+ .steps{grid-template-columns:1fr 1fr}
+ .contact{grid-template-columns:1fr;padding:44px 28px}
+}
+@media (max-width:720px){
+ section{padding:72px 0}
+ .menu{display:none;position:absolute;top:72px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px 16px 16px;border-bottom:1px solid var(--line);box-shadow:0 20px 40px rgba(14,26,58,.1)}
+ .menu.open{display:flex}
+ .menu a{padding:14px 4px;border-bottom:1px solid var(--line);font-size:16px}
+ .burger{display:block}
+ .nav .btn{display:none}
+ .duo,.grid3,.proj,.steps{grid-template-columns:1fr}
+ .duo .card{padding:28px}
+ .float{display:none}
+ .stats{gap:24px}
+ .phone{width:250px}
+ .code{font-size:11.5px;padding:16px;overflow-x:auto;white-space:nowrap}
+}
+</style>
+</head>
+<body>
+
+<header id="top">
+ <div class="wrap nav">
+  <a href="#" class="brand" aria-label="Adael Oliveira, início"><img src="assets/logo_mark.png" alt="" width="64" height="36"><span>ADAEL <b>OLIVEIRA</b></span></a>
+  <nav class="menu" id="menu">
+   <a href="#servicos">Serviços</a><a href="#projetos">Projetos</a><a href="#como">Como funciona</a><a href="#contato">Contato</a>
+  </nav>
+  <a class="btn btn-primary js-wa" href="#contato">Fale comigo</a>
+  <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+ </div>
+</header>
+
+<main>
+<section class="hero">
+ <div class="blob" style="width:520px;height:520px;background:#a9c1ff;left:-160px;top:-120px"></div>
+ <div class="blob" style="width:460px;height:460px;background:#c9d8ff;right:-140px;bottom:-120px"></div>
+ <div class="wrap hero-grid">
+  <div>
+   <span class="badge"><i></i>Disponível para novos projetos</span>
+   <h1>Do código<br>ao <span class="blue">circuito.</span></h1>
+   <p class="lead">Sou o Adael Oliveira. Desenvolvo <b>sistemas web</b> e <b>sistemas embarcados</b>: programas sob medida, sites e equipamentos inteligentes que resolvem o problema real do seu negócio.</p>
+   <div class="cta-row">
+    <a class="btn btn-primary js-wa" href="#contato"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Conte seu desafio</a>
+    <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+   </div>
+   <div class="stats">
+    <div><b>Web + Hardware</b>da tela ao equipamento</div>
+    <div><b>Sob medida</b>do jeito do seu negócio</div>
+    <div><b>Todo o Brasil</b>atendimento remoto</div>
+   </div>
+  </div>
+  <div style="position:relative;justify-self:center">
+   <div class="phone">
+    <video id="vid" src="assets/video.mp4" poster="assets/poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de apresentação dos serviços"></video>
+    <button class="sound" id="sound" aria-label="Ativar som"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path id="w" d="M23 9l-6 6M17 9l6 6"/></svg></button>
+   </div>
+   <div class="float f1"><span class="ic"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span>Sistemas Web</div>
+   <div class="float f2"><span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span>Embarcados · ESP32</div>
+  </div>
+ </div>
+</section>
+
+<section id="sobre" style="padding-top:40px">
+ <div class="wrap">
+  <div class="reveal">
+   <div class="kicker">Duas especialidades, uma solução</div>
+   <h2>Software e hardware<br>trabalhando <span class="blue">juntos</span></h2>
+   <p class="sub">A maioria dos profissionais faz só uma parte. Eu desenvolvo o sistema e também o equipamento que conversa com ele, então tudo funciona integrado, sem depender de vários fornecedores.</p>
+  </div>
+  <div class="duo">
+   <div class="card reveal">
+    <div class="code"><span class="c">// sistema web sob medida</span><br><span class="k">const</span> pedido = <span class="k">await</span> criarOS({<br>&nbsp;&nbsp;cliente: <span class="s">"Maria"</span>,<br>&nbsp;&nbsp;status: <span class="s">"em andamento"</span><br>});<br>notificar(<span class="s">"WhatsApp"</span>, pedido);</div>
+    <h3>Sistemas <span class="blue">Web</span></h3>
+    <p>Sistemas de gestão, painéis, sites e integrações que rodam no navegador, no computador ou no celular.</p>
+    <div class="tags"><span>HTML/CSS/JS</span><span>Node.js</span><span>Firebase</span><span>Supabase</span><span>APIs</span></div>
+   </div>
+   <div class="card reveal">
+    <div class="code"><span class="c">// firmware embarcado</span><br><span class="k">void</span> loop() {<br>&nbsp;&nbsp;<span class="k">float</span> t = sensor.temperatura();<br>&nbsp;&nbsp;<span class="k">if</span> (t &gt; limite) rele.ligar();<br>&nbsp;&nbsp;tela.mostrar(t);<br>}</div>
+    <h3>Sistemas <span class="blue">Embarcados</span></h3>
+    <p>Equipamentos inteligentes com sensores, telas touch e automação, que você acompanha e controla pelo celular.</p>
+    <div class="tags"><span>ESP32 / ESP8266</span><span>Arduino</span><span>LVGL</span><span>IoT</span><span>MIDI</span></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="servicos" style="background:#fff">
+ <div class="wrap">
+  <div class="reveal">
+   <div class="kicker">Serviços</div>
+   <h2>O que eu posso fazer<br>pelo <span class="blue">seu negócio</span></h2>
+   <p class="sub">Se é repetitivo, eu automatizo. Se não existe, eu crio.</p>
+  </div>
+  <div class="grid3">
+   <div class="card svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></div><h3>Sistemas sob medida</h3><p>Programas feitos para a rotina da sua empresa, sem pagar por funções que você não usa.</p><ul><li>Ordem de serviço</li><li>Estoque e vendas</li><li>Chamada de clientes e senhas</li><li>Cobrança e controle financeiro</li></ul></div>
+   <div class="card svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><h3>Sites profissionais</h3><p>Sites rápidos, bonitos no celular e preparados para aparecer no Google.</p><ul><li>Site institucional</li><li>Cardápio e catálogo online</li><li>Páginas de venda</li><li>Otimização para Google</li></ul></div>
+   <div class="card svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></div><h3>Embarcados e IoT</h3><p>Equipamentos que medem, decidem e agem sozinhos, e avisam você no celular.</p><ul><li>Sensores e atuadores</li><li>Controle de temperatura e acesso</li><li>Monitoramento remoto</li><li>Protótipos com ESP32</li></ul></div>
+   <div class="card svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="13" rx="2"/><path d="M12 18v3M8 21h8"/><path d="M9 14l2-2 2 2 3-3"/></svg></div><h3>Telas touch e painéis</h3><p>Interfaces simples para operar máquinas e equipamentos, até para quem não entende de tecnologia.</p><ul><li>Painéis com tela touch</li><li>Displays e painéis de LED</li><li>Interfaces para máquinas</li></ul></div>
+   <div class="card svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14h4"/></svg></div><h3>Integrações e automação</h3><p>Sistemas que conversam entre si e tarefas que fazem a si mesmas.</p><ul><li>Mensagens automáticas no WhatsApp</li><li>Cobranças por PIX e boleto</li><li>Integração com APIs</li><li>Automação de tarefas repetitivas</li></ul></div>
+   <div class="card svc reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg></div><h3>Consultoria técnica</h3><p>Você explica a ideia, eu mostro o caminho mais simples e barato para tirar do papel.</p><ul><li>Análise do problema</li><li>Escolha de tecnologia</li><li>Projetos de música e áudio (MIDI)</li></ul></div>
+  </div>
+ </div>
+</section>
+
+<section id="projetos" class="dark">
+ <div class="blob" style="width:520px;height:520px;background:#1446c8;right:-200px;top:-200px;opacity:.35"></div>
+ <div class="wrap" style="position:relative">
+  <div class="reveal">
+   <div class="kicker">Projetos</div>
+   <h2>Algumas coisas<br>que eu já <span style="color:#8fb0ff">desenvolvi</span></h2>
+   <p class="sub">Projetos reais, do sistema web ao firmware.</p>
+  </div>
+  <div class="proj">
+   <div class="pj reveal"><div class="type">Web + Embarcado</div><h3>Chamada de garçom</h3><p>QR Code em cada mesa, painel no caixa e aviso em painel de LED com ESP32. O cliente chama, o garçom vê na hora.</p><div class="tags"><span>Web</span><span>ESP32</span><span>LED</span></div><a class="more" href="https://github.com/Adael-Oliveira/ChamarGarcom" target="_blank" rel="noopener">Ver no GitHub →</a></div>
+   <div class="pj reveal"><div class="type">Sistema Web</div><h3>Ordens de serviço</h3><p>Gestão de ordens de serviço para assistência técnica: cadastro de clientes, status do conserto e histórico.</p><div class="tags"><span>Web</span><span>Firebase</span></div></div>
+   <div class="pj reveal"><div class="type">Sistema Web</div><h3>Chamada da recepção</h3><p>Sistema local que chama clientes para os setores em tempo real, com painel da recepção e administração.</p><div class="tags"><span>Node.js</span><span>Socket.IO</span></div></div>
+   <div class="pj reveal"><div class="type">Embarcado</div><h3>Pedaleira MIDI USB</h3><p>Pedaleira com 20 notas e 6 botões configuráveis, reconhecida no computador como instrumento MIDI nativo.</p><div class="tags"><span>ESP32-S3</span><span>USB MIDI</span></div></div>
+   <div class="pj reveal"><div class="type">Embarcado + Web</div><h3>Controle térmico</h3><p>Controle de temperatura com ESP8266 e painel web no celular para acompanhar e ajustar à distância.</p><div class="tags"><span>ESP8266</span><span>IoT</span></div></div>
+   <div class="pj reveal"><div class="type">Web</div><h3>Conversor de arquivos</h3><p>Conversão entre PDF, PNG, JPG, WEBP e outros formatos direto no navegador, sem enviar arquivos para servidor.</p><div class="tags"><span>Web</span><span>Privacidade</span></div><a class="more" href="https://github.com/Adael-Oliveira/ArquivoLab" target="_blank" rel="noopener">Ver no GitHub →</a></div>
+  </div>
+ </div>
+</section>
+
+<section id="como">
+ <div class="wrap">
+  <div class="reveal">
+   <div class="kicker">Como funciona</div>
+   <h2>Do seu problema<br>à <span class="blue">solução pronta</span></h2>
+  </div>
+  <div class="steps">
+   <div class="card step reveal"><h3>Conversa</h3><p>Você me conta o desafio. Sem termos técnicos, do jeito que acontece no dia a dia.</p></div>
+   <div class="card step reveal"><h3>Proposta</h3><p>Eu apresento a solução, o prazo e o valor, de forma clara e sem surpresas.</p></div>
+   <div class="card step reveal"><h3>Desenvolvimento</h3><p>Você acompanha o andamento e testa as versões antes da entrega final.</p></div>
+   <div class="card step reveal"><h3>Entrega e suporte</h3><p>Tudo instalado e funcionando, com orientação de uso e suporte depois.</p></div>
+  </div>
+ </div>
+</section>
+
+<section style="padding-top:0">
+ <div class="wrap reveal">
+  <div class="kicker">Segmentos</div>
+  <h2>Cada solução feita para<br>a <span class="blue">sua realidade</span></h2>
+  <div class="chips"><span>Restaurantes</span><span>Oficinas</span><span>Assistência técnica</span><span>Clínicas</span><span>Escritórios</span><span>Comércio</span><span>Indústria</span><span>Agro</span><span>Música e áudio</span></div>
+ </div>
+</section>
+
+<section id="contato" style="padding-top:0">
+ <div class="wrap">
+  <div class="contact reveal">
+   <div style="position:relative;z-index:1">
+    <div class="kicker" style="color:#bcd0ff">Contato</div>
+    <h2>Conte pra mim<br>o seu desafio.</h2>
+    <p>Juntos, a gente encontra a solução. Me chame e explique o que você precisa, sem compromisso.</p>
+   </div>
+   <div class="links">
+    <a class="btn btn-white js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#1fa855"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Chamar no WhatsApp</a>
+    <a class="btn btn-line js-ig" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><span class="js-ig-text">Instagram</span></a>
+    <a class="btn btn-line" href="https://github.com/Adael-Oliveira" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.7s.8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1a3.6 3.6 0 0 1 .1 2.7 3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap foot">
+  <img src="assets/logo_full.png" alt="Adael Oliveira · Desenvolvimento de Sistemas · Web e Embarcados" width="116" height="56">
+  <div>© <span id="ano">2026</span> Adael Oliveira · Desenvolvimento de Sistemas · Web e Embarcados</div>
+ </div>
+</footer>
+
+<a class="wa-float js-wa" href="#" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+
+<script>
+// ===== CONTATOS: edite aqui =====
+const CONTATO = {
+  whatsapp: '5519983332894',   // só números, com 55 + DDD. Ex.: 5519999999999
+  instagram: 'dev_adaeloliveira', // sem @
+  mensagem: 'Olá, Adael! Vi seu site e gostaria de conversar sobre um projeto.'
+};
+document.querySelectorAll('.js-wa').forEach(a => {
+  if (/^\d{10,15}$/.test(CONTATO.whatsapp)) { a.href = 'https://wa.me/' + CONTATO.whatsapp + '?text=' + encodeURIComponent(CONTATO.mensagem); a.target = '_blank'; a.rel = 'noopener'; }
+  else { a.href = '#contato'; a.removeAttribute('target'); }
+});
+document.querySelectorAll('.js-ig').forEach(a => {
+  if (/^[\w.]+$/.test(CONTATO.instagram)) { a.href = 'https://instagram.com/' + CONTATO.instagram; a.querySelector('.js-ig-text').textContent = '@' + CONTATO.instagram; }
+  else a.style.display = 'none';
+});
+document.getElementById('ano').textContent = new Date().getFullYear();
+// header
+const hd = document.querySelector('header');
+addEventListener('scroll', () => hd.classList.toggle('scrolled', scrollY > 10), { passive: true });
+// mobile menu
+const bg = document.getElementById('burger'), mn = document.getElementById('menu');
+bg.addEventListener('click', () => { const o = mn.classList.toggle('open'); bg.setAttribute('aria-expanded', o); });
+mn.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mn.classList.remove('open'); bg.setAttribute('aria-expanded', false); }));
+// video sound toggle
+const v = document.getElementById('vid'), sb = document.getElementById('sound');
+sb.addEventListener('click', () => {
+  v.muted = !v.muted; if (!v.muted) { v.currentTime = 0; v.play(); }
+  sb.setAttribute('aria-label', v.muted ? 'Ativar som' : 'Desativar som');
+  document.getElementById('w').setAttribute('d', v.muted ? 'M23 9l-6 6M17 9l6 6' : 'M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14');
+});
+// reveal on scroll
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 }) : null;
+document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 3) * 80 + 'ms'; io ? io.observe(el) : el.classList.add('in'); });
+</script>
+</body>
+</html>
