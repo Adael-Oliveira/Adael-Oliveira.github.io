@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"Adael Oliveira · Desenvolvimento de Sistemas","url":"https://adael-oliveira.github.io/","image":"https://adael-oliveira.github.io/assets/og.jpg","logo":"https://adael-oliveira.github.io/assets/icon-512.png","description":"Desenvolvimento de sistemas web e embarcados: sistemas sob medida, sites, automação e IoT.","areaServed":"BR","founder":{"@type":"Person","name":"Adael Oliveira","jobTitle":"Desenvolvedor de Sistemas Web e Embarcados","sameAs":["https://github.com/Adael-Oliveira"]}}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Adael Oliveira · Desenvolvimento de Sistemas","url":"https://adael-oliveira.github.io/","image":"https://adael-oliveira.github.io/assets/og.jpg","logo":"https://adael-oliveira.github.io/assets/icon-512.png","description":"Desenvolvimento de sistemas web e embarcados: sistemas sob medida, sites, automação e IoT.","areaServed":"BR","founder":{"@type":"Person","name":"Adael Oliveira","jobTitle":"Desenvolvedor de Sistemas Web e Embarcados"}}
 </script>
 <style>
 :root{--navy:#0e1a3a;--navy2:#1b2a55;--blue:#1446c8;--blue2:#2f6bff;--sky:#e8efff;--line:#dfe6f5;--bg:#f6f8fd;--card:#fff;--muted:#5b6788;--ok:#1aa760;--radius:22px;--shadow:0 18px 48px rgba(14,26,58,.10),0 2px 0 rgba(14,26,58,.03)}
@@ -69,8 +69,6 @@ header.scrolled{border-color:var(--line)}
 .stats b{display:block;font-size:22px;color:var(--navy)}
 .phone{position:relative;justify-self:center;width:min(320px,100%);aspect-ratio:9/16;border-radius:38px;background:var(--navy);padding:10px;box-shadow:0 40px 80px rgba(14,26,58,.28);transform:rotate(2deg)}
 .phone video{width:100%;height:100%;object-fit:cover;border-radius:30px;background:#fff}
-.phone .sound{position:absolute;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;background:rgba(14,26,58,.85);color:#fff;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.phone .sound svg{width:22px;height:22px}
 .float{position:absolute;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:var(--shadow);font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;white-space:nowrap}
 .float .ic{width:36px;height:36px;border-radius:11px;background:var(--sky);display:flex;align-items:center;justify-content:center}
 .float svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -198,7 +196,6 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
   <div style="position:relative;justify-self:center">
    <div class="phone">
     <video id="vid" src="assets/video.mp4" poster="assets/poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de apresentação dos serviços"></video>
-    <button class="sound" id="sound" aria-label="Ativar som"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path id="w" d="M23 9l-6 6M17 9l6 6"/></svg></button>
    </div>
    <div class="float f1"><span class="ic"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span>Sistemas Web</div>
    <div class="float f2"><span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span>Embarcados · ESP32</div>
@@ -257,12 +254,12 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
    <p class="sub">Projetos reais, do sistema web ao firmware.</p>
   </div>
   <div class="proj">
-   <div class="pj reveal"><div class="type">Web + Embarcado</div><h3>Chamada de garçom</h3><p>QR Code em cada mesa, painel no caixa e aviso em painel de LED com ESP32. O cliente chama, o garçom vê na hora.</p><div class="tags"><span>Web</span><span>ESP32</span><span>LED</span></div><a class="more" href="https://github.com/Adael-Oliveira/ChamarGarcom" target="_blank" rel="noopener">Ver no GitHub →</a></div>
+   <div class="pj reveal"><div class="type">Web + Embarcado</div><h3>Acenai · Chamada de garçom</h3><p>QR Code em cada mesa, painel no caixa e aviso em painel de LED com ESP32. O cliente chama, o garçom vê na hora.</p><div class="tags"><span>Web</span><span>ESP32</span><span>LED</span></div><a class="more" href="https://acenai.com.br" target="_blank" rel="noopener">acenai.com.br →</a></div>
    <div class="pj reveal"><div class="type">Sistema Web</div><h3>Ordens de serviço</h3><p>Gestão de ordens de serviço para assistência técnica: cadastro de clientes, status do conserto e histórico.</p><div class="tags"><span>Web</span><span>Firebase</span></div></div>
    <div class="pj reveal"><div class="type">Sistema Web</div><h3>Chamada da recepção</h3><p>Sistema local que chama clientes para os setores em tempo real, com painel da recepção e administração.</p><div class="tags"><span>Node.js</span><span>Socket.IO</span></div></div>
    <div class="pj reveal"><div class="type">Embarcado</div><h3>Pedaleira MIDI USB</h3><p>Pedaleira com 20 notas e 6 botões configuráveis, reconhecida no computador como instrumento MIDI nativo.</p><div class="tags"><span>ESP32-S3</span><span>USB MIDI</span></div></div>
    <div class="pj reveal"><div class="type">Embarcado + Web</div><h3>Controle térmico</h3><p>Controle de temperatura com ESP8266 e painel web no celular para acompanhar e ajustar à distância.</p><div class="tags"><span>ESP8266</span><span>IoT</span></div></div>
-   <div class="pj reveal"><div class="type">Web</div><h3>Conversor de arquivos</h3><p>Conversão entre PDF, PNG, JPG, WEBP e outros formatos direto no navegador, sem enviar arquivos para servidor.</p><div class="tags"><span>Web</span><span>Privacidade</span></div><a class="more" href="https://github.com/Adael-Oliveira/ArquivoLab" target="_blank" rel="noopener">Ver no GitHub →</a></div>
+   <div class="pj reveal"><div class="type">Web</div><h3>Conversor de arquivos</h3><p>Conversão entre PDF, PNG, JPG, WEBP e outros formatos direto no navegador, sem enviar arquivos para servidor.</p><div class="tags"><span>Web</span><span>Privacidade</span></div></div>
   </div>
  </div>
 </section>
@@ -301,7 +298,6 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
    <div class="links">
     <a class="btn btn-white js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#1fa855"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Chamar no WhatsApp</a>
     <a class="btn btn-line js-ig" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><span class="js-ig-text">Instagram</span></a>
-    <a class="btn btn-line" href="https://github.com/Adael-Oliveira" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.7s.8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1a3.6 3.6 0 0 1 .1 2.7 3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a>
    </div>
   </div>
  </div>
@@ -340,13 +336,6 @@ addEventListener('scroll', () => hd.classList.toggle('scrolled', scrollY > 10), 
 const bg = document.getElementById('burger'), mn = document.getElementById('menu');
 bg.addEventListener('click', () => { const o = mn.classList.toggle('open'); bg.setAttribute('aria-expanded', o); });
 mn.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mn.classList.remove('open'); bg.setAttribute('aria-expanded', false); }));
-// video sound toggle
-const v = document.getElementById('vid'), sb = document.getElementById('sound');
-sb.addEventListener('click', () => {
-  v.muted = !v.muted; if (!v.muted) { v.currentTime = 0; v.play(); }
-  sb.setAttribute('aria-label', v.muted ? 'Ativar som' : 'Desativar som');
-  document.getElementById('w').setAttribute('d', v.muted ? 'M23 9l-6 6M17 9l6 6' : 'M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14');
-});
 // reveal on scroll
 const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 }) : null;
 document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 3) * 80 + 'ms'; io ? io.observe(el) : el.classList.add('in'); });
