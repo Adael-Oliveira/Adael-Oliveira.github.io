@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Adael Oliveira · Desenvolvimento de Sistemas Web e Embarcados</title>
-<meta name="description" content="Sistemas sob medida, sites profissionais, automação, telas touch e soluções com ESP32. Do código ao circuito, para restaurantes, oficinas, comércio, escritórios e indústria.">
+<meta name="description" content="Sistemas sob medida, sites profissionais, automação, telas touch e soluções com ESP32. Produtos: plataforma para guincho e reboque e Acenai, chamada de garçom por QR Code. Do código ao circuito, para restaurantes, oficinas, comércio, escritórios e indústria.">
 <meta name="theme-color" content="#0e1a3a">
 <link rel="canonical" href="https://adael-oliveira.github.io/">
 <meta property="og:type" content="website">
@@ -117,6 +117,36 @@ header.scrolled{border-color:var(--line)}
 .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
 .chips span{background:#fff;border:2px solid var(--line);border-radius:999px;padding:12px 22px;font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:10px}
 .chips span::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue2)}
+/* produtos */
+.prod{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;margin-top:56px}
+.prod+.prod{margin-top:96px}
+.prod.rev .prod-media{order:2}
+.prod-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:var(--sky);color:var(--blue)}
+.prod-tag.amber{background:#fff4d6;color:#9a6200}
+.prod h3{font-size:clamp(28px,3.4vw,38px);margin:16px 0 12px}
+.prod p.desc{color:var(--muted);font-size:17px}
+.feat{list-style:none;display:grid;gap:12px;margin:24px 0 30px}
+.feat li{display:flex;gap:14px;align-items:flex-start;font-size:15.5px;color:var(--navy2)}
+.feat li b{color:var(--navy)}
+.feat .fi{flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:var(--sky);display:flex;align-items:center;justify-content:center}
+.feat .fi svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.prod-media{position:relative;min-height:440px}
+.mock-lap{position:relative;width:88%;background:var(--navy);border-radius:16px 16px 0 0;padding:10px 10px 12px;box-shadow:0 30px 70px rgba(14,26,58,.25)}
+.mock-lap img{border-radius:6px;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top left}
+.mock-lap::after{content:"";position:absolute;left:-5%;right:-5%;bottom:-16px;height:16px;background:linear-gradient(#cfd6e4,#98a2b6);border-radius:0 0 18px 18px}
+.mock-ph{position:absolute;right:0;bottom:-30px;width:34%;background:var(--navy);border-radius:28px;padding:7px;box-shadow:0 30px 60px rgba(14,26,58,.35)}
+.mock-ph img{border-radius:22px;width:100%;height:auto;aspect-ratio:9/19.5;object-fit:cover;object-position:top}
+.play{position:absolute;left:34%;top:30%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,180,0,.95);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 34px rgba(0,0,0,.3);transition:transform .2s}
+.play:hover{transform:translate(-50%,-50%) scale(1.08)}
+.play svg{width:34px;height:34px;margin-left:5px}
+.acen-img{width:100%;max-width:520px;margin-inline:auto;border-radius:28px;background:#fff7ec;padding:20px;box-shadow:var(--shadow)}
+.acen-img img{border-radius:18px;width:100%;height:auto}
+.btn-amber{background:#FFB400;color:#111;box-shadow:0 12px 28px rgba(255,180,0,.35)}
+.btn-amber:hover{transform:translateY(-2px);background:#f0a800}
+.vmodal{border:0;padding:0;background:transparent;max-width:min(420px,92vw);width:100%}
+.vmodal::backdrop{background:rgba(8,14,32,.82)}
+.vmodal video{width:100%;border-radius:22px;background:#000;max-height:86vh}
+.vmodal .x{position:absolute;top:-46px;right:0;background:#fff;border:0;border-radius:999px;padding:8px 16px;font:600 14px Poppins;cursor:pointer}
 /* contact */
 .contact{background:linear-gradient(135deg,#1446c8,#0e1a3a);color:#fff;border-radius:32px;padding:64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;position:relative;overflow:hidden}
 .contact::after{content:"";position:absolute;right:-120px;top:-120px;width:380px;height:380px;border-radius:50%;border:60px solid rgba(255,255,255,.06)}
@@ -142,6 +172,9 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
  .phone{margin-top:20px;transform:none}
  .f1{left:-10px}.f2{right:-10px}
  .grid3,.proj{grid-template-columns:1fr 1fr}
+ .prod{grid-template-columns:1fr;gap:36px}
+ .prod.rev .prod-media{order:0}
+ .prod-media{min-height:0;padding-bottom:30px}
  .steps{grid-template-columns:1fr 1fr}
  .contact{grid-template-columns:1fr;padding:44px 28px}
 }
@@ -157,6 +190,7 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
  .float{display:none}
  .stats{gap:24px}
  .phone{width:250px}
+ .mock-ph{width:38%;bottom:0}
  .code{font-size:11.5px;padding:16px;overflow-x:auto;white-space:nowrap}
 }
 </style>
@@ -167,7 +201,7 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
  <div class="wrap nav">
   <a href="#" class="brand" aria-label="Adael Oliveira, início"><img src="assets/logo_mark.png" alt="" width="64" height="36"><span>ADAEL <b>OLIVEIRA</b></span></a>
   <nav class="menu" id="menu">
-   <a href="#servicos">Serviços</a><a href="#projetos">Projetos</a><a href="#como">Como funciona</a><a href="#contato">Contato</a>
+   <a href="#produtos">Produtos</a><a href="#servicos">Serviços</a><a href="#projetos">Projetos</a><a href="#como">Como funciona</a><a href="#contato">Contato</a>
   </nav>
   <a class="btn btn-primary js-wa" href="#contato">Fale comigo</a>
   <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -202,6 +236,64 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
   </div>
  </div>
 </section>
+
+<section id="produtos" style="padding-top:40px">
+ <div class="wrap">
+  <div class="reveal">
+   <div class="kicker">Produtos</div>
+   <h2>Soluções prontas,<br>com a <span class="blue">sua marca</span></h2>
+   <p class="sub">Plataformas completas, já testadas, que eu personalizo e coloco no ar para o seu negócio.</p>
+  </div>
+
+  <div class="prod">
+   <div class="prod-media reveal">
+    <div class="mock-lap"><img src="assets/guincho-painel.jpg" alt="Painel de gestão da plataforma para guincho" loading="lazy" width="1280" height="800"></div>
+    <div class="mock-ph"><img src="assets/guincho-cotacao.jpg" alt="Cotação com rota completa no mapa, no celular" loading="lazy" width="540" height="1168"></div>
+    <button class="play" id="playGuincho" aria-label="Assistir ao vídeo da plataforma para guincho"><svg viewBox="0 0 24 24" fill="#111"><path d="M7 4v16l13-8z"/></svg></button>
+   </div>
+   <div class="reveal">
+    <span class="prod-tag amber">Novo · Guincho e reboque</span>
+    <h3>Plataforma para <span class="blue">Guincho e Reboque</span></h3>
+    <p class="desc">Site próprio com cotação automática no mapa e um painel de gestão completo. O cliente pede, o preço sai na hora e o pedido chega no seu WhatsApp.</p>
+    <ul class="feat">
+     <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span><b>Cotação pela rota completa:</b> base → veículo → destino → base, com os km de cada trecho.</span></li>
+     <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/></svg></span><span><b>Pedido direto no WhatsApp</b>, pronto para confirmar.</span></li>
+     <li><span class="fi"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 14l3-3 3 2 4-5"/></svg></span><span><b>Gestão completa:</b> chamados, clientes, financeiro, frota, motoristas e comissões.</span></li>
+     <li><span class="fi"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span><span><b>Site próprio para aparecer no Google</b>, com as suas cores, logo, fotos e preços.</span></li>
+    </ul>
+    <div class="cta-row" style="margin-top:0">
+     <a class="btn btn-primary js-wa" data-msg="Olá, Adael! Tenho interesse na Plataforma para Guincho e Reboque." href="#contato"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Quero para minha empresa</a>
+     <button class="btn btn-ghost" id="playGuincho2" type="button">Ver o vídeo</button>
+    </div>
+   </div>
+  </div>
+
+  <div class="prod rev">
+   <div class="prod-media reveal" style="min-height:0">
+    <div class="acen-img"><img src="assets/acenai.jpg" alt="Acenai: tela do cliente chamando o garçom pela mesa" loading="lazy" width="774" height="792"></div>
+   </div>
+   <div class="reveal">
+    <span class="prod-tag">Restaurantes e bares</span>
+    <h3>Acenai · <span class="blue">Chamada de garçom</span></h3>
+    <p class="desc">Uma plaquinha com QR Code e NFC em cada mesa. O cliente chama o garçom ou pede a conta pelo celular, sem baixar aplicativo, e a equipe vê na hora.</p>
+    <ul class="feat">
+     <li><span class="fi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v7M14 20h3"/></svg></span><span><b>QR Code e NFC por mesa</b>, com logo e cores do restaurante.</span></li>
+     <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span><span><b>Chamada no caixa com som e cronômetro.</b> O cliente vê quando alguém está a caminho.</span></li>
+     <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><span><b>Relatório do tempo de resposta</b> da equipe.</span></li>
+    </ul>
+    <div class="cta-row" style="margin-top:0">
+     <a class="btn btn-primary" href="https://acenai.com.br" target="_blank" rel="noopener">Conhecer o Acenai →</a>
+     <a class="btn btn-ghost js-wa" data-msg="Olá, Adael! Quero uma demonstração do Acenai." href="#contato">Quero uma demonstração</a>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<dialog class="vmodal" id="vmodal" aria-label="Vídeo da plataforma para guincho">
+ <button class="x" id="vclose">Fechar ✕</button>
+ <video id="vguincho" src="assets/guincho-video.mp4" poster="assets/guincho-poster.jpg" controls playsinline preload="none"></video>
+</dialog>
 
 <section id="sobre" style="padding-top:40px">
  <div class="wrap">
@@ -254,8 +346,7 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
    <p class="sub">Projetos reais, do sistema web ao firmware.</p>
   </div>
   <div class="proj">
-   <div class="pj reveal"><div class="type">Web + Embarcado</div><h3>Acenai · Chamada de garçom</h3><p>QR Code em cada mesa, painel no caixa e aviso em painel de LED com ESP32. O cliente chama, o garçom vê na hora.</p><div class="tags"><span>Web</span><span>ESP32</span><span>LED</span></div><a class="more" href="https://acenai.com.br" target="_blank" rel="noopener">acenai.com.br →</a></div>
-   <div class="pj reveal"><div class="type">Sistema Web</div><h3>Ordens de serviço</h3><p>Gestão de ordens de serviço para assistência técnica: cadastro de clientes, status do conserto e histórico.</p><div class="tags"><span>Web</span><span>Firebase</span></div></div>
+      <div class="pj reveal"><div class="type">Sistema Web</div><h3>Ordens de serviço</h3><p>Gestão de ordens de serviço para assistência técnica: cadastro de clientes, status do conserto e histórico.</p><div class="tags"><span>Web</span><span>Firebase</span></div></div>
    <div class="pj reveal"><div class="type">Sistema Web</div><h3>Chamada da recepção</h3><p>Sistema local que chama clientes para os setores em tempo real, com painel da recepção e administração.</p><div class="tags"><span>Node.js</span><span>Socket.IO</span></div></div>
    <div class="pj reveal"><div class="type">Embarcado</div><h3>Pedaleira MIDI USB</h3><p>Pedaleira com 20 notas e 6 botões configuráveis, reconhecida no computador como instrumento MIDI nativo.</p><div class="tags"><span>ESP32-S3</span><span>USB MIDI</span></div></div>
    <div class="pj reveal"><div class="type">Embarcado + Web</div><h3>Controle térmico</h3><p>Controle de temperatura com ESP8266 e painel web no celular para acompanhar e ajustar à distância.</p><div class="tags"><span>ESP8266</span><span>IoT</span></div></div>
@@ -321,7 +412,7 @@ const CONTATO = {
   mensagem: 'Olá, Adael! Vi seu site e gostaria de conversar sobre um projeto.'
 };
 document.querySelectorAll('.js-wa').forEach(a => {
-  if (/^\d{10,15}$/.test(CONTATO.whatsapp)) { a.href = 'https://wa.me/' + CONTATO.whatsapp + '?text=' + encodeURIComponent(CONTATO.mensagem); a.target = '_blank'; a.rel = 'noopener'; }
+  if (/^\d{10,15}$/.test(CONTATO.whatsapp)) { a.href = 'https://wa.me/' + CONTATO.whatsapp + '?text=' + encodeURIComponent(a.dataset.msg || CONTATO.mensagem); a.target = '_blank'; a.rel = 'noopener'; }
   else { a.href = '#contato'; a.removeAttribute('target'); }
 });
 document.querySelectorAll('.js-ig').forEach(a => {
@@ -329,6 +420,14 @@ document.querySelectorAll('.js-ig').forEach(a => {
   else a.style.display = 'none';
 });
 document.getElementById('ano').textContent = new Date().getFullYear();
+// vídeo da plataforma para guincho
+const vm = document.getElementById('vmodal'), vv = document.getElementById('vguincho');
+const abrirVideo = () => { if (vm.showModal) vm.showModal(); else vm.setAttribute('open', ''); vv.play().catch(() => {}); };
+const fecharVideo = () => { vv.pause(); vm.close ? vm.close() : vm.removeAttribute('open'); };
+['playGuincho', 'playGuincho2'].forEach(id => document.getElementById(id).addEventListener('click', abrirVideo));
+document.getElementById('vclose').addEventListener('click', fecharVideo);
+vm.addEventListener('click', e => { if (e.target === vm) fecharVideo(); });
+vm.addEventListener('close', () => vv.pause());
 // header
 const hd = document.querySelector('header');
 addEventListener('scroll', () => hd.classList.toggle('scrolled', scrollY > 10), { passive: true });
