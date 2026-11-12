@@ -18,7 +18,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"Adael Oliveira · Desenvolvimento de Sistemas","url":"https://adael-oliveira.github.io/","image":"https://adael-oliveira.github.io/assets/og.jpg","logo":"https://adael-oliveira.github.io/assets/icon-512.png","description":"Desenvolvimento de sistemas web e embarcados: sistemas sob medida, sites, automação e IoT.","areaServed":"BR","founder":{"@type":"Person","name":"Adael Oliveira","jobTitle":"Desenvolvedor de Sistemas Web e Embarcados"}}
 </script>
@@ -32,7 +32,7 @@ a{color:inherit;text-decoration:none}
 .wrap{width:min(1160px,100% - 32px);margin-inline:auto}
 section{padding:96px 0}
 .kicker{font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
-h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
+h1,h2,h3{line-height:1.08;letter-spacing:-.025em;font-family:'Bricolage Grotesque','Poppins',sans-serif;font-weight:800}
 h2{font-size:clamp(30px,4.4vw,46px);font-weight:700;margin-top:10px}
 .sub{color:var(--muted);font-size:18px;max-width:640px;margin-top:14px}
 .blue{color:var(--blue)}
@@ -166,7 +166,97 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 .wa-float svg{width:30px;height:30px}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+/* ====== movimento ====== */
+.reveal{opacity:0;transform:translateY(34px) scale(.985);filter:blur(6px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s}
+.reveal.in{opacity:1;transform:none;filter:none}
+#prog{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--blue),var(--blue2),#7fd3ff);z-index:80;box-shadow:0 0 12px rgba(47,107,255,.6)}
+header{transition:border-color .3s,transform .35s cubic-bezier(.2,.7,.2,1),background .3s}
+header.hide{transform:translateY(-100%)}
+.menu a{position:relative;transition:color .2s}
+.menu a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.menu a:hover::after,.menu a.on::after{transform:scaleX(1)}
+.menu a.on{color:var(--blue)}
+/* hero: código -> circuito */
+.circuit{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.circuit .tr{fill:none;stroke:rgba(20,70,200,.22);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.8s cubic-bezier(.6,0,.2,1) forwards}
+.circuit .pad{fill:#fff;stroke:rgba(20,70,200,.35);stroke-width:2;opacity:0;animation:pop .4s ease forwards}
+.circuit .pulse{fill:var(--blue2);filter:drop-shadow(0 0 6px rgba(47,107,255,.9))}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln>span{display:inline-block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.18s}
+@keyframes rise{to{transform:none}}
+.code-w{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.82em;letter-spacing:-.04em;color:var(--blue);background:var(--sky);border-radius:.18em;padding:0 .14em;display:inline-flex;align-items:center;white-space:nowrap}
+.code-w .ty{display:inline-block;overflow:hidden;width:0;animation:type .9s steps(6) .75s forwards}
+@keyframes type{to{width:6ch}}
+.code-w .caret{display:inline-block;width:.09em;height:.9em;background:var(--blue);margin-left:.05em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.circ{position:relative;display:inline-block;color:var(--navy)}
+.circ svg{position:absolute;left:0;bottom:-.16em;width:100%;height:.36em;overflow:visible}
+.circ svg path{fill:none;stroke:var(--blue2);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.1s cubic-bezier(.6,0,.2,1) 1.55s forwards}
+.circ svg circle{fill:#fff;stroke:var(--blue2);stroke-width:4;opacity:0;animation:pop .35s ease 2.5s forwards}
+.circ svg circle.glow{fill:var(--blue2);stroke:none;animation:pop .35s ease 2.5s forwards,glow 1.8s ease-in-out 2.9s infinite}
+@keyframes glow{50%{filter:drop-shadow(0 0 8px rgba(47,107,255,1))}}
+.hero .badge,.hero p.lead,.hero .cta-row,.hero .stats{opacity:0;animation:fadeup .8s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .badge{animation-delay:.05s}.hero p.lead{animation-delay:.55s}.hero .cta-row{animation-delay:.75s}.hero .stats{animation-delay:.95s}
+@keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.badge i{animation:live 2s ease-in-out infinite}
+@keyframes live{50%{box-shadow:0 0 0 8px rgba(26,167,96,0)}}
+.stage{position:relative;justify-self:center;perspective:1100px;opacity:0;animation:fadeup 1s cubic-bezier(.2,.8,.2,1) .35s forwards}
+.phone{transform:rotate(2deg);transition:transform .25s ease-out;transform-style:preserve-3d}
+.float{animation:bob 5s ease-in-out infinite;z-index:2}
+.f2{animation-delay:-2.5s}
+@keyframes bob{50%{transform:translateY(-12px)}}
+/* botões */
+.btn{position:relative;overflow:hidden;will-change:transform}
+.btn-primary::after,.btn-white::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
+.btn-primary:hover::after,.btn-white:hover::after{transform:translateX(120%)}
+/* cards com luz que segue o cursor */
+.svc,.pj,.step{position:relative;isolation:isolate}
+.svc::before,.step::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(47,107,255,.12),transparent 45%);opacity:0;transition:opacity .3s;z-index:-1;pointer-events:none}
+.svc:hover::before,.step:hover::after{opacity:1}
+.pj::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),#6f9bff,transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
+.pj:hover::before{opacity:1}
+.svc .ico{transition:transform .4s cubic-bezier(.2,.8,.2,1),background .3s}
+.svc:hover .ico{transform:rotate(-8deg) scale(1.08);background:var(--blue)}
+.svc .ico svg{transition:stroke .3s}
+.svc:hover .ico svg{stroke:#fff}
+/* projetos: trilhas animadas ao fundo */
+.dark .circuit .tr{stroke:rgba(143,176,255,.14);animation:none;stroke-dashoffset:0}
+.dark .circuit .pad{opacity:1;animation:none;fill:#0e1a3a;stroke:rgba(143,176,255,.25)}
+/* passos ligados por uma trilha */
+.steps{position:relative}
+.steps .wire{position:absolute;left:4%;right:4%;top:46px;height:3px;border-radius:3px;background:var(--line);overflow:hidden;z-index:0}
+.steps .wire i{position:absolute;inset:0;background:linear-gradient(90deg,var(--blue),var(--blue2));transform-origin:0 50%;transform:scaleX(var(--p,0));box-shadow:0 0 10px rgba(47,107,255,.6)}
+.step{z-index:1;transition:transform .4s,box-shadow .4s}
+.step::before{transition:color .4s,-webkit-text-stroke-color .4s}
+.step.lit::before{color:var(--blue2)}
+.step.lit{box-shadow:0 22px 50px rgba(20,70,200,.16)}
+/* segmentos em faixa contínua */
+.marq{margin-top:36px;display:grid;gap:14px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq .row{display:flex;gap:12px;width:max-content;animation:marq 38s linear infinite}
+.marq .row.r2{animation-direction:reverse;animation-duration:46s}
+.marq:hover .row{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marq .chips{margin:0;flex-wrap:nowrap}
+/* contato com fundo vivo */
+.contact{background:linear-gradient(120deg,#1446c8,#0e1a3a 45%,#1b3fa8 70%,#0e1a3a);background-size:260% 260%;animation:mesh 14s ease-in-out infinite}
+@keyframes mesh{50%{background-position:100% 50%}}
+.contact::before{content:"";position:absolute;left:-80px;bottom:-140px;width:300px;height:300px;border-radius:50%;border:40px solid rgba(127,211,255,.07);animation:bob 9s ease-in-out infinite}
+.contact::after{animation:spin 30s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.wa-float{animation:ring 4s ease-in-out 3s infinite}
+@keyframes ring{0%,88%,100%{box-shadow:0 14px 30px rgba(31,168,85,.4)}94%{box-shadow:0 14px 30px rgba(31,168,85,.4),0 0 0 14px rgba(31,168,85,.18)}}
+[data-par]{will-change:transform}
+:focus-visible{outline:3px solid var(--blue2);outline-offset:3px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ .reveal{opacity:1;transform:none;filter:none}
+ .hero h1 .ln>span{transform:none}.code-w .ty{width:6ch}
+ html{scroll-behavior:auto}
+ .marq .row{animation:none}
+}
 @media (max-width:960px){
  .hero-grid{grid-template-columns:1fr;text-align:left}
  .phone{margin-top:20px;transform:none}
@@ -192,10 +282,13 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
  .phone{width:250px}
  .mock-ph{width:38%;bottom:0}
  .code{font-size:11.5px;padding:16px;overflow-x:auto;white-space:nowrap}
+ .steps .wire{display:none}
+ .hero .circuit{opacity:.45}
 }
 </style>
 </head>
 <body>
+<div id="prog" aria-hidden="true"></div>
 
 <header id="top">
  <div class="wrap nav">
@@ -211,11 +304,27 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 <main>
 <section class="hero">
  <div class="blob" style="width:520px;height:520px;background:#a9c1ff;left:-160px;top:-120px"></div>
+ <svg class="circuit" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <g id="trs">
+   <path id="t1" class="tr" d="M-20 140 H260 L300 180 H520 L560 140 H760 L800 180 H900"/>
+   <path id="t2" class="tr" d="M-20 610 H180 L240 550 H470 L510 590 H700 L760 530 H880"/>
+   <path id="t3" class="tr" d="M120 760 V690 L160 650 H380 L420 690 H620 L660 650 H860 L900 610"/>
+   <path id="t4" class="tr" d="M1220 90 H1080 L1040 130 H960 L930 160"/>
+   <path id="t5" class="tr" d="M1220 680 H1100 L1060 640 H990 L960 610"/>
+   <path id="t6" class="tr" d="M640 -20 V60 L680 100 H860 L900 140"/>
+  </g>
+  <g class="pads">
+   <circle class="pad" cx="900" cy="180" r="6" style="animation-delay:1.6s"/><circle class="pad" cx="880" cy="530" r="6" style="animation-delay:1.7s"/>
+   <circle class="pad" cx="900" cy="610" r="6" style="animation-delay:1.8s"/><circle class="pad" cx="930" cy="160" r="6" style="animation-delay:1.6s"/>
+   <circle class="pad" cx="960" cy="610" r="6" style="animation-delay:1.7s"/><circle class="pad" cx="900" cy="140" r="6" style="animation-delay:1.5s"/>
+  </g>
+  <g class="pulses"></g>
+ </svg>
  <div class="blob" style="width:460px;height:460px;background:#c9d8ff;right:-140px;bottom:-120px"></div>
  <div class="wrap hero-grid">
   <div>
    <span class="badge"><i></i>Disponível para novos projetos</span>
-   <h1>Do código<br>ao <span class="blue">circuito.</span></h1>
+   <h1><span class="ln"><span>Do <span class="code-w"><span class="ty">código</span><i class="caret"></i></span></span></span><span class="ln"><span>ao <span class="circ">circuito.<svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 H120 L136 24 H246 L262 10 H286"/><circle cx="286" cy="10" r="7" class="glow"/><circle cx="4" cy="10" r="6"/></svg></span></span></span></h1>
    <p class="lead">Sou o Adael Oliveira. Desenvolvo <b>sistemas web</b> e <b>sistemas embarcados</b>: programas sob medida, sites e equipamentos inteligentes que resolvem o problema real do seu negócio.</p>
    <div class="cta-row">
     <a class="btn btn-primary js-wa" href="#contato"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Conte seu desafio</a>
@@ -227,8 +336,8 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
     <div><b>Todo o Brasil</b>atendimento remoto</div>
    </div>
   </div>
-  <div style="position:relative;justify-self:center">
-   <div class="phone">
+  <div class="stage">
+   <div class="phone" data-tilt>
     <video id="vid" src="assets/video.mp4" poster="assets/poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de apresentação dos serviços"></video>
    </div>
    <div class="float f1"><span class="ic"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span>Sistemas Web</div>
@@ -247,8 +356,8 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 
   <div class="prod">
    <div class="prod-media reveal">
-    <div class="mock-lap"><img src="assets/guincho-painel.jpg" alt="Painel de gestão da plataforma para guincho" loading="lazy" width="1280" height="800"></div>
-    <div class="mock-ph"><img src="assets/guincho-cotacao.jpg" alt="Cotação com rota completa no mapa, no celular" loading="lazy" width="540" height="1168"></div>
+    <div class="mock-lap" data-par="-0.04"><img src="assets/guincho-painel.jpg" alt="Painel de gestão da plataforma para guincho" loading="lazy" width="1280" height="800"></div>
+    <div class="mock-ph" data-par="0.10"><img src="assets/guincho-cotacao.jpg" alt="Cotação com rota completa no mapa, no celular" loading="lazy" width="540" height="1168"></div>
     <button class="play" id="playGuincho" aria-label="Assistir ao vídeo da plataforma para guincho"><svg viewBox="0 0 24 24" fill="#111"><path d="M7 4v16l13-8z"/></svg></button>
    </div>
    <div class="reveal">
@@ -270,7 +379,7 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 
   <div class="prod rev">
    <div class="prod-media reveal" style="min-height:0">
-    <div class="acen-img"><img src="assets/acenai.jpg" alt="Acenai: tela do cliente chamando o garçom pela mesa" loading="lazy" width="774" height="792"></div>
+    <div class="acen-img" data-tilt><img src="assets/acenai.jpg" alt="Acenai: tela do cliente chamando o garçom pela mesa" loading="lazy" width="774" height="792"></div>
    </div>
    <div class="reveal">
     <span class="prod-tag">Restaurantes e bares</span>
@@ -339,6 +448,22 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 
 <section id="projetos" class="dark">
  <div class="blob" style="width:520px;height:520px;background:#1446c8;right:-200px;top:-200px;opacity:.35"></div>
+ <svg class="circuit" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <g id="drs">
+   <path id="d1" class="tr" d="M-20 140 H260 L300 180 H520 L560 140 H760 L800 180 H900"/>
+   <path id="d2" class="tr" d="M-20 610 H180 L240 550 H470 L510 590 H700 L760 530 H880"/>
+   <path id="d3" class="tr" d="M120 760 V690 L160 650 H380 L420 690 H620 L660 650 H860 L900 610"/>
+   <path id="d4" class="tr" d="M1220 90 H1080 L1040 130 H960 L930 160"/>
+   <path id="d5" class="tr" d="M1220 680 H1100 L1060 640 H990 L960 610"/>
+   <path id="d6" class="tr" d="M640 -20 V60 L680 100 H860 L900 140"/>
+  </g>
+  <g class="pads">
+   <circle class="pad" cx="900" cy="180" r="6" style="animation-delay:1.6s"/><circle class="pad" cx="880" cy="530" r="6" style="animation-delay:1.7s"/>
+   <circle class="pad" cx="900" cy="610" r="6" style="animation-delay:1.8s"/><circle class="pad" cx="930" cy="160" r="6" style="animation-delay:1.6s"/>
+   <circle class="pad" cx="960" cy="610" r="6" style="animation-delay:1.7s"/><circle class="pad" cx="900" cy="140" r="6" style="animation-delay:1.5s"/>
+  </g>
+  <g class="pulses"></g>
+ </svg>
  <div class="wrap" style="position:relative">
   <div class="reveal">
    <div class="kicker">Projetos</div>
@@ -362,6 +487,7 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
    <h2>Do seu problema<br>à <span class="blue">solução pronta</span></h2>
   </div>
   <div class="steps">
+   <div class="wire" aria-hidden="true"><i></i></div>
    <div class="card step reveal"><h3>Conversa</h3><p>Você me conta o desafio. Sem termos técnicos, do jeito que acontece no dia a dia.</p></div>
    <div class="card step reveal"><h3>Proposta</h3><p>Eu apresento a solução, o prazo e o valor, de forma clara e sem surpresas.</p></div>
    <div class="card step reveal"><h3>Desenvolvimento</h3><p>Você acompanha o andamento e testa as versões antes da entrega final.</p></div>
@@ -374,7 +500,7 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
  <div class="wrap reveal">
   <div class="kicker">Segmentos</div>
   <h2>Cada solução feita para<br>a <span class="blue">sua realidade</span></h2>
-  <div class="chips"><span>Restaurantes</span><span>Oficinas</span><span>Assistência técnica</span><span>Clínicas</span><span>Escritórios</span><span>Comércio</span><span>Indústria</span><span>Agro</span><span>Música e áudio</span></div>
+  <div class="marq" aria-label="Segmentos atendidos"><div class="row"><div class="chips"><span>Restaurantes</span><span>Oficinas</span><span>Assistência técnica</span><span>Clínicas</span><span>Escritórios</span><span>Comércio</span><span>Indústria</span><span>Agro</span><span>Música e áudio</span></div><div class="chips" aria-hidden="true"><span>Restaurantes</span><span>Oficinas</span><span>Assistência técnica</span><span>Clínicas</span><span>Escritórios</span><span>Comércio</span><span>Indústria</span><span>Agro</span><span>Música e áudio</span></div></div><div class="row r2"><div class="chips"><span>Guinchos e reboques</span><span>Bares</span><span>Lojas</span><span>Salões</span><span>Academias</span><span>Padarias</span><span>Condomínios</span><span>Igrejas</span><span>Escolas</span></div><div class="chips" aria-hidden="true"><span>Guinchos e reboques</span><span>Bares</span><span>Lojas</span><span>Salões</span><span>Academias</span><span>Padarias</span><span>Condomínios</span><span>Igrejas</span><span>Escolas</span></div></div></div>
  </div>
 </section>
 
@@ -435,9 +561,55 @@ addEventListener('scroll', () => hd.classList.toggle('scrolled', scrollY > 10), 
 const bg = document.getElementById('burger'), mn = document.getElementById('menu');
 bg.addEventListener('click', () => { const o = mn.classList.toggle('open'); bg.setAttribute('aria-expanded', o); });
 mn.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mn.classList.remove('open'); bg.setAttribute('aria-expanded', false); }));
+// ===== movimento =====
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(pointer: fine)').matches;
+// comprimento das trilhas + pulsos de sinal correndo pelas trilhas
+document.querySelectorAll('.circuit').forEach(svg => {
+  const g = svg.querySelector('.pulses'); const NS = 'http://www.w3.org/2000/svg';
+  svg.querySelectorAll('.tr').forEach((p, i) => {
+    const L = Math.ceil(p.getTotalLength()); p.style.setProperty('--len', L); p.style.animationDelay = (i * 0.12) + 's';
+    if (RM) return;
+    const c = document.createElementNS(NS, 'circle'); c.setAttribute('r', 3.5); c.setAttribute('class', 'pulse');
+    const m = document.createElementNS(NS, 'animateMotion'); m.setAttribute('dur', (3.2 + (i % 3) * 0.9) + 's'); m.setAttribute('repeatCount', 'indefinite'); m.setAttribute('begin', (1.8 + i * 0.45) + 's');
+    const mp = document.createElementNS(NS, 'mpath'); mp.setAttribute('href', '#' + p.id); m.appendChild(mp); c.appendChild(m);
+    c.setAttribute('cx', -40); g.appendChild(c);
+  });
+});
+// barra de progresso, cabeçalho que some ao descer e link ativo
+const prog = document.getElementById('prog'); let lastY = scrollY;
+const secs = [...document.querySelectorAll('main section[id]')]; const links = [...document.querySelectorAll('.menu a')];
+const steps = document.querySelector('.steps');
+function onScroll() {
+  const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+  hd.classList.toggle('hide', y > lastY && y > 400 && !mn.classList.contains('open')); lastY = y;
+  let cur = ''; secs.forEach(s => { if (s.getBoundingClientRect().top < innerHeight * .4) cur = s.id; });
+  links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+  if (steps) { const r = steps.getBoundingClientRect(); const p = Math.min(1, Math.max(0, (innerHeight * .8 - r.top) / (r.height + innerHeight * .3)));
+    steps.querySelector('.wire i').style.setProperty('--p', p);
+    steps.querySelectorAll('.step').forEach((s, i, all) => s.classList.toggle('lit', p >= (i + .5) / all.length)); }
+  if (!RM) document.querySelectorAll('[data-par]').forEach(el => { const r = el.parentElement.getBoundingClientRect(); const d = (r.top + r.height / 2 - innerHeight / 2); el.style.translate = `0 ${(-d * +el.dataset.par).toFixed(1)}px`; });
+}
+let tick = false; addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { onScroll(); tick = false; }); } }, { passive: true }); onScroll();
+// luz que acompanha o cursor nos cards
+document.querySelectorAll('.svc,.pj,.step').forEach(el => el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); }));
+if (FINE && !RM) {
+  // inclinação 3D
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    const host = el.closest('.stage,.prod-media') || el;
+    host.addEventListener('pointermove', e => { const r = host.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg) rotate(${el.classList.contains('phone') ? 2 : 0}deg)`; });
+    host.addEventListener('pointerleave', () => el.style.transform = '');
+  });
+  // botões "magnéticos"
+  document.querySelectorAll('.btn').forEach(b => {
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .15}px, ${(e.clientY - r.top - r.height / 2) * .25}px)`; });
+    b.addEventListener('pointerleave', () => b.style.transform = '');
+  });
+}
 // reveal on scroll
 const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 }) : null;
-document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 3) * 80 + 'ms'; io ? io.observe(el) : el.classList.add('in'); });
+document.querySelectorAll('.reveal').forEach(el => { const sib = el.parentElement ? [...el.parentElement.children].filter(x => x.classList.contains('reveal')) : [el]; el.style.transitionDelay = Math.min(sib.indexOf(el), 5) * 90 + 'ms'; io ? io.observe(el) : el.classList.add('in'); });
 </script>
 </body>
 </html>
