@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>VilaPixel Builds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Vitrine de brinquedos: fundo azul-ceu frio, tinta azul-marinho, acento laranja-tijolo e verde-grama.
+     Layout: cabecalho fixo, vitrine com destaque 3D, filtros, grade de cards; modal 3D e carrinho lateral. */
+  --bg:#eaf1f8; --surface:#ffffff; --ink:#14213d; --muted:#5b6b86; --line:#d3deeb;
+  --accent:#e8622c; --accent-ink:#ffffff; --grass:#3f9b4f; --sky:#cfe3f6;
+  --font-display:"Pixelify Sans", "Courier New", monospace;
+  --font-body:"Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1626; --surface:#17213a; --ink:#e8eef8; --muted:#9fb0cc; --line:#283656;
+    --accent:#ff7a45; --accent-ink:#1a0f08; --grass:#5cc46c; --sky:#1b2a47; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1626; --surface:#17213a; --ink:#e8eef8; --muted:#9fb0cc; --line:#283656;
+  --accent:#ff7a45; --accent-ink:#1a0f08; --grass:#5cc46c; --sky:#1b2a47; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;text-wrap:balance;margin:0;letter-spacing:.3px}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+.proto{background:var(--ink);color:var(--bg);font-size:13px;text-align:center;padding:6px 16px}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-mark{width:30px;height:30px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px}
+.brand-mark i{display:block;border-radius:2px}
+.brand b{font-family:var(--font-display);font-size:22px}
+.brand small{display:block;font-size:11px;color:var(--muted);margin-top:-4px}
+.top nav{margin-left:auto;display:flex;gap:18px;font-weight:600;font-size:15px}
+.top nav a{text-decoration:none;color:var(--muted)}
+.top nav a:hover{color:var(--ink)}
+.cart-btn{display:flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:8px 16px;font-weight:800}
+.soon{display:inline-block;background:var(--grass);color:#fff;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.6px;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.cart-btn span{background:var(--accent-ink);color:var(--accent);border-radius:999px;min-width:22px;padding:0 6px;font-size:13px;text-align:center}
+
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;padding:36px 0 20px}
+.hero h1{font-size:clamp(34px,5vw,56px);line-height:1.02}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);font-size:18px;max-width:52ch;margin:16px 0 22px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:8px;padding:10px 18px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.orange{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.hero-stage{position:relative;background:linear-gradient(180deg,var(--sky),var(--surface));border:1px solid var(--line);border-radius:16px;aspect-ratio:4/3;overflow:hidden}
+.hero-stage canvas{width:100%;height:100%;display:block;cursor:grab}
+.hero-tag{position:absolute;left:14px;bottom:14px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px}
+.hero-tag b{font-family:var(--font-display)}
+.stats{display:flex;gap:28px;margin-top:24px;flex-wrap:wrap}
+.stats div{font-size:13px;color:var(--muted)}
+.stats b{display:block;font-family:var(--font-display);font-size:28px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:18px 0;border-top:1px solid var(--line);margin-top:20px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip small{opacity:.65;margin-left:4px}
+.search{margin-left:auto;display:flex;gap:8px}
+.search input,.search select{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 12px;font:inherit;font-size:14px}
+.search input{width:200px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;padding-bottom:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.card .thumb{position:relative;aspect-ratio:1/0.8;background:linear-gradient(180deg,var(--sky),var(--surface));cursor:pointer}
+.card .thumb canvas{width:100%;height:100%;display:block}
+.badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+.badge.new{left:auto;right:10px;background:var(--grass);color:#fff;border-color:var(--grass)}
+.card .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:19px}
+.card .meta{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card .desc{font-size:14px;color:var(--muted);margin:0}
+.card .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:8px}
+.price{font-family:var(--font-display);font-size:28px;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.price .cents{font-size:.6em;vertical-align:.45em;margin-left:1px}
+.price .cur{font-size:.55em;margin-right:3px;color:var(--ink)}
+.tag{position:absolute;right:10px;bottom:10px;background:var(--ink);color:var(--bg);font-family:var(--font-display);font-size:20px;line-height:1;padding:7px 11px 6px;border-radius:8px;box-shadow:0 2px 0 var(--accent);font-variant-numeric:tabular-nums}
+.modal .price{font-size:40px}
+.price small{font-family:var(--font-body);font-size:12px;color:var(--muted);font-weight:600}
+.add{border:0;background:var(--accent);color:var(--accent-ink);font-weight:800;border-radius:8px;padding:8px 12px;font-size:14px}
+.add.done{background:var(--grass);color:#fff}
+
+section.how{padding:40px 0;border-top:1px solid var(--line)}
+section.how h2{font-size:30px;margin-bottom:18px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.step b{font-family:var(--font-display);font-size:26px;color:var(--accent)}
+.step h3{font-size:18px;margin:4px 0}
+.step p{margin:0;color:var(--muted);font-size:14px}
+.formats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.fmt{border:1px dashed var(--line);border-radius:var(--radius);padding:14px;font-size:14px;color:var(--muted)}
+.fmt b{color:var(--ink);display:block;font-size:15px}
+/* central de protecao */
+section[id],.toolbar,.formats{scroll-margin-top:80px}
+section.prot{padding:40px 0;border-top:1px solid var(--line)}
+section.prot>h2{font-size:30px}
+section.prot>p.lead{color:var(--muted);max-width:62ch;margin:8px 0 18px}
+.cols{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.panel h3{font-size:22px;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.contact{display:flex;flex-direction:column;gap:10px}
+.c-item{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none}
+a.c-item:hover{border-color:var(--ink)}
+.c-ico{width:38px;height:38px;border-radius:8px;display:grid;place-items:center;font-family:var(--font-display);font-size:18px;color:#fff;flex:none}
+.c-item b{display:block;font-size:15px}
+.c-item small{color:var(--muted);font-size:13px}
+.server{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;font-size:14px}
+.rules{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.rules li{margin:4px 0}
+.pform{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f{display:flex;flex-direction:column;gap:5px}
+.f.full{grid-column:1/-1}
+.pform label{font-weight:700;font-size:14px}
+.pform .opt{font-weight:400;color:var(--muted)}
+.pform input,.pform select,.pform textarea{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:9px 11px;width:100%;font:inherit}
+.pform textarea{min-height:84px;resize:vertical}
+.help{font-size:12px;color:var(--muted)}
+.err{font-size:12px;color:var(--accent);font-weight:700}
+.types{display:flex;gap:8px;flex-wrap:wrap}
+.types label{display:flex;align-items:center;gap:6px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;background:var(--bg)}
+.types input{width:auto}
+.types label:has(input:checked){border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.pactions{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.result{display:none;margin-top:18px;border:2px solid var(--grass);border-radius:12px;padding:16px;background:color-mix(in srgb,var(--grass) 8%,var(--surface))}
+.result.show{display:block}
+.result h4{font-family:var(--font-display);font-size:20px;margin:0 0 4px}
+.result pre{white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:13px;max-height:260px;overflow:auto;margin:10px 0}
+.ticket{font-family:var(--font-display);font-size:18px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}.pform{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(10,16,30,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:14px;max-width:1000px;width:100%;max-height:92vh;overflow:auto;display:grid;grid-template-columns:1.3fr 1fr}
+.modal .stage{position:relative;background:linear-gradient(180deg,var(--sky),var(--surface));min-height:420px}
+.modal .stage canvas{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+.stage .hint{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:12px;color:var(--muted)}
+.stage .ctrl{position:absolute;top:10px;right:10px;display:flex;gap:6px}
+.stage .ctrl button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;width:34px;height:34px;font-weight:800}
+.modal .info{padding:22px;display:flex;flex-direction:column;gap:12px}
+.modal .info h2{font-size:28px}
+.close{align-self:flex-end;border:0;background:transparent;color:var(--muted);font-size:26px;line-height:1}
+.spec{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin:0}
+.spec dt{color:var(--muted)}
+.spec dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+.swatches{display:flex;flex-wrap:wrap;gap:4px}
+.swatches i{width:18px;height:18px;border-radius:3px;border:1px solid rgba(0,0,0,.15)}
+.fmt-row{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:800;border-radius:999px;padding:3px 10px;border:1px solid var(--line)}
+.pill.ok{background:color-mix(in srgb,var(--grass) 18%,transparent);border-color:var(--grass)}
+.pill.soon{color:var(--muted)}
+
+/* carrinho */
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:60;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.drawer header h2{font-size:22px}
+.items{flex:1;overflow:auto;padding:8px 18px}
+.line-item{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.line-item canvas{width:56px;height:46px;background:var(--sky);border-radius:6px}
+.line-item b{font-size:14px;display:block}
+.line-item small{color:var(--muted)}
+.line-item button{border:0;background:transparent;color:var(--muted);font-size:13px;text-decoration:underline}
+.drawer footer{border-top:1px solid var(--line);padding:16px 18px;display:flex;flex-direction:column;gap:10px;color:var(--ink)}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
+.drawer textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px;padding:8px}
+.note{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);padding:30px 0;text-align:center}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .modal{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .formats{grid-template-columns:1fr}
+  .top nav{display:none}
+  .search{margin-left:0;width:100%}
+  .search input{flex:1;width:auto}
+}
+@media (max-width:420px){.steps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.drawer{transition:none}}
+</style>
+</head>
+<body>
+<div class="proto"><b>Loja em breve!</b> Reserve agora as construções que você quer e seja avisado primeiro no lançamento.</div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#catalogo" aria-label="VilaPixel Builds">
+      <span class="brand-mark" aria-hidden="true"><i style="background:#e8622c"></i><i style="background:#3f9b4f"></i><i style="background:#3557d6"></i><i style="background:#f4c430"></i></span>
+      <span><b>VilaPixel Builds</b><small>por Adael Oliveira</small></span>
+    </a>
+    <nav aria-label="Seções">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#formatos">Formatos</a>
+      <a href="#protecao">Proteção e contato</a>
+    </nav>
+    <button class="cart-btn" id="openCart" aria-label="Abrir minhas reservas">Reservas <span id="cartCount">0</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <span class="soon">Em breve · reservas abertas</span>
+      <h1>Construções prontas para o seu <em>servidor</em> de blocos.</h1>
+      <p>Casas, veículos, minijogos e réplicas de tecnologia feitos bloco a bloco. Gire cada modelo em 3D e reserve os seus favoritos. No lançamento, você recebe o arquivo pronto para importar ou pede para instalarmos no seu servidor.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#catalogo">Ver e reservar</a>
+        <a class="btn" href="#como-funciona">Como funciona</a>
+      </div>
+      <div class="stats">
+        <div><b id="statItems">0</b>construções</div>
+        <div><b id="statBlocks">0</b>blocos no total</div>
+        <div><b>.lvl</b>pronto para MCGalaxy</div>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <canvas id="heroCanvas" aria-label="Modelo em destaque girando em 3D"></canvas>
+      <div class="hero-tag">Em destaque: <b id="heroName"></b></div>
+    </div>
+  </section>
+
+  <div class="toolbar" id="catalogo">
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria"></div>
+    <div class="search">
+      <input id="q" type="search" placeholder="Buscar: castelo, carro, robô..." aria-label="Buscar construção">
+      <select id="sort" aria-label="Ordenar">
+        <option value="pop">Destaques</option>
+        <option value="low">Menor preço</option>
+        <option value="high">Maior preço</option>
+        <option value="size">Maior construção</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <section class="how" id="como-funciona">
+    <h2>Como funciona</h2>
+    <div class="steps">
+      <div class="step"><b>1</b><h3>Escolha</h3><p>Gire os modelos em 3D e toque em Reservar nos que quiser para o seu mundo.</p></div>
+      <div class="step"><b>2</b><h3>Reserve</h3><p>Envie sua lista de reservas pelo WhatsApp. Não precisa pagar nada agora.</p></div>
+      <div class="step"><b>3</b><h3>Seja avisado</h3><p>No lançamento você recebe o aviso e paga por PIX ou Mercado Pago. Compras feitas por adultos ou com autorização dos responsáveis.</p></div>
+      <div class="step"><b>4</b><h3>Receba</h3><p>O arquivo chega por WhatsApp ou e-mail. Com a instalação, a gente coloca direto no seu servidor.</p></div>
+    </div>
+    <div class="formats" id="formatos">
+      <div class="fmt"><b>ClassiCube · MCGalaxy (.lvl)</b>Copie para <code>extra/import</code> e use <code>/import nome</code>. Depois é só <code>/copy</code> e <code>/paste</code> onde quiser.</div>
+      <div class="fmt"><b>Minecraft Java (.schem)</b>Sob consulta. Exportação para WorldEdit em preparação.</div>
+      <div class="fmt"><b>Instalação no seu servidor</b>Montamos o lobby, os portais, as placas e as regras para você. Valor por orçamento.</div>
+    </div>
+  </section>
+
+  <section class="prot" id="protecao" aria-labelledby="protTitle">
+    <h2 id="protTitle">Jogando na VilaPixel? Proteja sua construção</h2>
+    <p class="lead">Fale comigo ou peça proteção para o que você construiu no servidor. Com a proteção, só você (e quem você escolher) consegue quebrar ou mexer.</p>
+    <div class="cols">
+      <aside class="panel">
+        <h3>Fale comigo</h3>
+        <p class="sub">Respondo assim que puder. English / español: <a href="central/">Central VilaPixel</a>.</p>
+        <div class="contact">
+          <a class="c-item" id="lnkWhats" href="#" target="_blank" rel="noopener"><span class="c-ico" style="background:#25a35a">W</span><span><b>WhatsApp</b><small id="whatsTxt"></small></span></a>
+          <a class="c-item" id="lnkDiscord" href="#" target="_blank" rel="noopener"><span class="c-ico" style="background:#5865f2">D</span><span><b>Discord</b><small>Comunidade VilaPixel</small></span></a>
+          <a class="c-item" id="lnkInsta" href="#" target="_blank" rel="noopener"><span class="c-ico" style="background:#d6336c">I</span><span><b>Instagram</b><small id="instaTxt"></small></span></a>
+          <div class="c-item"><span class="c-ico" style="background:#e8622c">@</span><span><b>No jogo</b><small>Mensagem privada: @PrefeitoPixel sua mensagem</small></span></div>
+        </div>
+        <div class="server">
+          <b>Como entrar no servidor</b>
+          <ul class="rules">
+            <li>Abra o ClassiCube e procure VilaPixel na lista.</li>
+            <li>Leia as regras com /rules e aceite com /agree.</li>
+            <li>Visitantes constroem livremente em /goto construcao.</li>
+          </ul>
+        </div>
+        <div class="server">
+          <b>Regras da proteção</b>
+          <ul class="rules">
+            <li>A proteção é gratuita para quem segue as regras.</li>
+            <li>Só protejo construções feitas por você.</li>
+            <li>Construções abandonadas ou que atrapalhem outros podem perder a proteção.</li>
+            <li>Nunca vou pedir sua senha. Nunca digite comandos que outro jogador mandar.</li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="panel">
+        <h3>Pedir proteção de construção</h3>
+        <p class="sub">Preencha e envie. O pedido chega para o Prefeito com tudo pronto para ativar a proteção.</p>
+        <form class="pform" id="pform" novalidate>
+          <div class="f">
+            <label for="pNick">Seu nick no jogo</label>
+            <input id="pNick" autocomplete="off" placeholder="AnaSofia">
+            <span class="help">Igual ao do jogo, com maiúsculas e minúsculas.</span>
+            <span class="err" id="eNick"></span>
+          </div>
+          <div class="f">
+            <label for="pWorld">Mundo</label>
+            <select id="pWorld"><option>vilapixel</option><option>construcao</option><option>ilha</option><option value="outro">outro</option></select>
+          </div>
+          <div class="f full">
+            <span style="font-weight:700;font-size:14px" id="typeLbl">Tipo de pedido</span>
+            <div class="types" role="radiogroup" aria-labelledby="typeLbl">
+              <label><input type="radio" name="ptype" value="protect" checked> Proteger construção</label>
+              <label><input type="radio" name="ptype" value="add"> Adicionar dono</label>
+              <label><input type="radio" name="ptype" value="remove"> Remover proteção</label>
+              <label><input type="radio" name="ptype" value="other"> Outro assunto</label>
+            </div>
+          </div>
+          <div class="f">
+            <label for="pWhat">O que é a construção?</label>
+            <input id="pWhat" placeholder="Carro rosa">
+            <span class="err" id="eWhat"></span>
+          </div>
+          <div class="f">
+            <label for="pWhere">Onde fica?</label>
+            <input id="pWhere" placeholder="Ao lado da casa moderna">
+          </div>
+          <div class="f">
+            <label for="pCoords">Posição <span class="opt">(opcional)</span></label>
+            <input id="pCoords" placeholder="168, 47, 208">
+            <span class="help">Os números de "Position" no canto da tela, se souber.</span>
+          </div>
+          <div class="f">
+            <label for="pCo">Outros donos <span class="opt">(opcional)</span></label>
+            <input id="pCo" placeholder="kaiookk1, Amigo123">
+            <span class="help">Nicks separados por vírgula.</span>
+          </div>
+          <div class="f">
+            <label for="pContact">Seu contato <span class="opt">(opcional)</span></label>
+            <input id="pContact" placeholder="Discord, e-mail ou WhatsApp">
+          </div>
+          <div class="f">
+            <label for="pAge">Idade</label>
+            <select id="pAge"><option value="adult">18 anos ou mais</option><option value="minor">Menos de 18 (um responsável sabe)</option></select>
+          </div>
+          <div class="f full">
+            <label for="pMsg">Mensagem <span class="opt">(opcional)</span></label>
+            <textarea id="pMsg" placeholder="Conte o que precisar."></textarea>
+          </div>
+          <div class="pactions">
+            <button class="btn orange" type="submit">Gerar pedido</button>
+            <span class="note">Não peça nem envie senhas.</span>
+          </div>
+        </form>
+        <div class="result" id="pResult" aria-live="polite">
+          <h4>Pedido pronto!</h4>
+          <div class="ticket" id="pTicket"></div>
+          <p class="note">Envie pelo WhatsApp. O Prefeito ativa a proteção e avisa você no jogo.</p>
+          <pre id="pOut"></pre>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn orange" id="pSend" href="#" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+            <button class="btn primary" id="pCopy" type="button">Copiar pedido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>VilaPixel Builds · Adael Oliveira · Desenvolvimento de Sistemas · Web e Embarcados</span>
+    <span>Não afiliado à Mojang, Microsoft ou ClassiCube.</span>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal">
+    <div class="stage">
+      <canvas id="mCanvas" aria-label="Visualização 3D: arraste para girar"></canvas>
+      <div class="ctrl">
+        <button id="zIn" aria-label="Aproximar">+</button>
+        <button id="zOut" aria-label="Afastar">−</button>
+        <button id="spin" aria-label="Girar sozinho" aria-pressed="true">⟳</button>
+      </div>
+      <div class="hint">Arraste para girar · role para aproximar</div>
+    </div>
+    <div class="info">
+      <button class="close" id="mClose" aria-label="Fechar">×</button>
+      <span class="pill" id="mCat"></span>
+      <h2 id="mTitle"></h2>
+      <p id="mDesc" style="margin:0;color:var(--muted)"></p>
+      <dl class="spec">
+        <dt>Tamanho</dt><dd id="mSize"></dd>
+        <dt>Blocos</dt><dd id="mBlocks"></dd>
+        <dt>Inclui</dt><dd id="mInc"></dd>
+        <dt>Cores</dt><dd><div class="swatches" id="mSw"></div></dd>
+      </dl>
+      <div class="fmt-row"><span class="pill ok">.lvl ClassiCube</span><span class="pill soon">.schem Minecraft (sob consulta)</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px">
+        <div class="price" id="mPrice"></div>
+        <button class="add" id="mAdd">Reservar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<aside class="drawer" id="drawer" aria-label="Minhas reservas">
+  <header><h2>Minhas reservas</h2><button class="close" id="cClose" aria-label="Fechar reservas">×</button></header>
+  <div class="items" id="cItems"></div>
+  <footer>
+    <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" id="install"> Quero instalação no meu servidor (orçamento)</label>
+    <div class="total"><span>Valor estimado</span><span id="cTotal">R$ 0,00</span></div>
+    <label for="cMsg" class="note">Mensagem da reserva</label>
+    <textarea id="cMsg" readonly></textarea>
+    <a class="btn orange" id="cWhats" href="#" target="_blank" rel="noopener">Enviar reserva pelo WhatsApp</a>
+    <button class="btn" id="cCopy">Copiar reserva</button>
+    <span class="note">A reserva não tem custo. No lançamento você recebe o aviso e o link de pagamento (PIX ou Mercado Pago).</span>
+  </footer>
+</aside>
+
+<script>
+/* ======================= CONFIG ======================= */
+const WHATSAPP = "5519983332894"; // DDI+DDD+numero
+const WHATSAPP_SHOW = "(19) 98333-2894";
+const DISCORD = "https://discord.gg/SEU-CONVITE";
+const INSTAGRAM = "https://instagram.com/dev_adaeloliveira";
+const INSTAGRAM_SHOW = "@dev_adaeloliveira";
+
+/* ======================= PALETA ======================= */
+const C = {grass:'#5fae4a',dirt:'#8b5a2b',stone:'#8f8f8f',cobble:'#77797c',plank:'#b9894f',log:'#6b4a2b',leaves:'#3e8e33',
+  glass:'#bfe3ff',water:'#3a78d8',sand:'#e5d79e',red:'#d63a2f',orange:'#f08a24',yellow:'#f4d03f',lime:'#7ed957',green:'#2f8f3a',
+  teal:'#2bb3a3',cyan:'#36c2e0',blue:'#3557d6',indigo:'#5a3fd1',violet:'#9b4fd6',magenta:'#c94bc9',pink:'#f48fc4',black:'#2a2a2a',
+  gray:'#666a70',white:'#f1f1f1',gold:'#f2c230',iron:'#d6d9dd',brick:'#a8533a',obsidian:'#2a1f3d',snow:'#fbfdff',navy:'#1f2f66',lava:'#ff6a1a',
+  cream:'#efe3c2',brown:'#7a4b2a',silver:'#b9c2cc',darkgreen:'#245f2a'};
+const ALPHA = {[C.glass]:0.42,[C.water]:0.78};
+
+/* ======================= MODELO ======================= */
+class M{
+  constructor(){this.v=new Map()}
+  k(x,y,z){return x+','+y+','+z}
+  s(x,y,z,c){x=Math.round(x);y=Math.round(y);z=Math.round(z);if(c==null)this.v.delete(this.k(x,y,z));else this.v.set(this.k(x,y,z),c);return this}
+  g(x,y,z){return this.v.get(this.k(x,y,z))}
+  box(x1,y1,z1,x2,y2,z2,c){for(let y=Math.min(y1,y2);y<=Math.max(y1,y2);y++)for(let z=Math.min(z1,z2);z<=Math.max(z1,z2);z++)for(let x=Math.min(x1,x2);x<=Math.max(x1,x2);x++)this.s(x,y,z,c);return this}
+  walls(x1,y1,z1,x2,y2,z2,c){this.box(x1,y1,z1,x2,y2,z1,c).box(x1,y1,z2,x2,y2,z2,c).box(x1,y1,z1,x1,y2,z2,c).box(x2,y1,z1,x2,y2,z2,c);return this}
+  cyl(cx,cz,r,y1,y2,c,hollow){for(let y=y1;y<=y2;y++)for(let x=-r;x<=r;x++)for(let z=-r;z<=r;z++){const d=x*x+z*z;if(d<=r*r+r*0.8&&(!hollow||d>=(r-1)*(r-1)+(r-1)*0.8))this.s(cx+x,y,cz+z,c)}return this}
+  ball(cx,cy,cz,rx,ry,rz,c,onlyEmpty){for(let y=-ry;y<=ry;y++)for(let z=-rz;z<=rz;z++)for(let x=-rx;x<=rx;x++){if((x*x)/(rx*rx+.5)+(y*y)/(ry*ry+.5)+(z*z)/(rz*rz+.5)<=1){if(onlyEmpty&&this.g(cx+x,cy+y,cz+z))continue;this.s(cx+x,cy+y,cz+z,c)}}return this}
+  line(x1,y1,z1,x2,y2,z2,c){const n=Math.max(Math.abs(x2-x1),Math.abs(y2-y1),Math.abs(z2-z1))||1;for(let i=0;i<=n;i++)this.s(x1+(x2-x1)*i/n,y1+(y2-y1)*i/n,z1+(z2-z1)*i/n,c);return this}
+  put(o,dx,dy,dz){for(const [k,c] of o.v){const [x,y,z]=k.split(',').map(Number);this.s(x+dx,y+dy,z+dz,c)}return this}
+}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const base=(m,x1,z1,x2,z2,c)=>m.box(x1,-1,z1,x2,-1,z2,c||C.grass);
+
+/* ======================= CONSTRUCOES ======================= */
+const B = {};
+B.chale=()=>{const m=new M();base(m,-1,-1,11,9,C.cobble);m.box(0,0,0,10,3,8,C.plank).box(1,0,1,9,3,7,null);
+  for(const [x,z] of [[0,0],[10,0],[0,8],[10,8]])m.box(x,0,z,x,3,z,C.log);
+  m.box(5,0,8,5,1,8,null).box(2,1,8,3,2,8,C.glass).box(7,1,8,8,2,8,C.glass).box(0,1,3,0,2,5,C.glass).box(10,1,3,10,2,5,C.glass);
+  for(let k=0;k<6;k++){m.box(-1+k,4+k,-1,-1+k,4+k,9,C.red).box(11-k,4+k,-1,11-k,4+k,9,C.red);m.box(k,4+k,0,10-k,4+k,0,C.plank).box(k,4+k,8,10-k,4+k,8,C.plank)}
+  m.box(5,9,-1,5,9,9,C.red).box(8,6,2,8,10,2,C.brick);return m};
+B.sobrado=()=>{const m=new M();base(m,-1,-1,13,13,C.stone);m.box(0,0,0,12,9,10,C.brick).box(1,0,1,11,9,9,null).box(1,4,1,11,4,9,C.plank);
+  m.box(6,0,10,6,1,10,null);for(const y of [1,6]){m.box(2,y,10,3,y+1,10,C.glass).box(9,y,10,10,y+1,10,C.glass).box(0,y,4,0,y+1,6,C.glass).box(12,y,4,12,y+1,6,C.glass)}
+  m.box(-1,10,-1,13,10,11,C.gray).box(0,11,0,12,11,10,C.gray).box(5,0,11,7,0,12,C.stone).box(5,3,11,7,3,12,C.white).box(5,1,12,5,2,12,C.white).box(7,1,12,7,2,12,C.white);return m};
+B.moderna=()=>{const m=new M();base(m,-1,-1,21,11,C.gray);m.box(0,0,0,14,4,9,C.white).box(1,0,1,13,4,8,null).box(1,0,9,9,3,9,C.glass).box(11,0,9,11,1,9,null);
+  m.box(-1,5,-1,15,5,10,C.black).box(0,6,0,6,9,5,C.white).box(1,6,1,5,9,4,null).box(2,7,5,4,8,5,C.glass).box(-1,10,-1,7,10,6,C.black);
+  m.box(9,6,6,13,6,8,C.green).box(16,-1,2,20,-1,8,C.water).box(15,-1,1,21,-1,1,C.white).box(15,-1,9,21,-1,9,C.white);
+  m.box(17,0,0,17,2,0,C.black).ball(17,3,0,1,1,1,C.leaves);return m};
+B.praia=()=>{const m=new M();m.box(-3,-1,-3,17,-1,4,C.sand).box(-3,-1,5,17,-1,16,C.water);
+  for(const [x,z] of [[0,4],[12,4],[0,13],[12,13]])m.box(x,-1,z,x,2,z,C.log);
+  m.box(0,3,4,12,3,13,C.plank).box(0,4,4,12,7,13,C.teal).box(1,4,5,11,7,12,null).box(5,4,4,6,5,4,null).box(2,5,4,3,6,4,C.glass).box(9,5,4,10,6,4,C.glass).box(0,5,8,0,6,9,C.glass);
+  for(let k=0;k<5;k++)m.box(-1+k,8+k,3,13-k,8+k,3+0,C.orange).box(-1+k,8+k,14,13-k,8+k,14,C.orange).box(-1+k,8+k,3,-1+k,8+k,14,C.orange).box(13-k,8+k,3,13-k,8+k,14,C.orange);
+  m.box(5,0,2,6,2,3,C.plank);for(let i=0;i<3;i++)m.box(5,i,1-i+2,6,i,1-i+2,C.plank);
+  m.box(14,0,0,14,4,0,C.white).box(13,5,-1,15,5,1,C.red);return m};
+B.cabana=()=>{const m=new M();base(m,-1,-1,10,9,C.grass);for(let y=0;y<4;y++){const c=y%2?C.log:C.brown;m.walls(0,y,0,9,y,8,c)}
+  m.box(4,0,8,5,2,8,null).box(1,1,8,2,2,8,C.glass).box(7,1,8,8,2,8,C.glass);
+  for(let k=0;k<5;k++){m.box(-1+k,4+k,-1,10-k,4+k,-1,C.darkgreen).box(-1+k,4+k,9,10-k,4+k,9,C.darkgreen);m.box(-1+k,4+k,-1,-1+k,4+k,9,C.darkgreen).box(10-k,4+k,-1,10-k,4+k,9,C.darkgreen)}
+  m.box(3,8,-1,6,8,9,C.darkgreen).box(7,0,-2,8,10,-1,C.cobble).box(7,11,-2,7,12,-2,C.gray);m.box(1,-1,10,8,-1,11,C.plank);return m};
+B.arvore_casa=()=>{const m=new M();base(m,-6,-6,12,12);m.box(2,0,2,4,13,4,C.log);m.ball(3,15,3,7,4,7,C.leaves);
+  m.box(-2,7,-2,8,7,8,C.plank).walls(-2,8,-2,8,8,8,C.plank).box(0,8,0,6,11,6,C.orange).box(1,8,1,5,11,5,null).box(3,8,6,3,9,6,null).box(1,9,6,1,10,6,C.glass).box(5,9,6,5,10,6,C.glass);
+  for(let k=0;k<4;k++)m.box(0+k,12+k,0,6-k,12+k,6,C.red);for(let y=0;y<7;y++)m.s(3,y,9,C.plank).s(2,y,9,y%2?C.log:null);
+  m.box(-6,5,10,-4,5,10,C.log).line(-5,6,10,-5,4,10,C.log).box(-6,2,10,-4,2,10,C.plank);return m};
+B.castelo=()=>{const m=new M();base(m,-4,-4,30,30,C.grass);m.walls(-3,-1,-3,29,-1,29,C.water);m.walls(-2,-1,-2,28,-1,28,C.water);
+  m.walls(0,0,0,26,7,26,C.stone);for(let x=0;x<=26;x+=2){m.s(x,8,0,C.stone).s(x,8,26,C.stone).s(0,8,x,C.stone).s(26,8,x,C.stone)}
+  for(const [x,z] of [[0,0],[26,0],[0,26],[26,26]]){m.cyl(x,z,3,0,12,C.cobble);for(let a=0;a<8;a++){const t=a/8*Math.PI*2;m.s(x+Math.round(Math.cos(t)*3),13,z+Math.round(Math.sin(t)*3),C.cobble)}
+    m.box(x,13,z,x,16,z,C.log).box(x+1,15,z,x+3,16,z,C.red)}
+  m.box(11,0,26,15,5,26,null).box(11,6,26,15,6,26,C.log).box(12,-1,27,14,-1,30,C.plank);
+  m.box(8,0,8,18,14,18,C.stone).box(9,0,9,17,14,17,null);for(let x=8;x<=18;x+=2){m.s(x,15,8,C.stone).s(x,15,18,C.stone).s(8,15,x,C.stone).s(18,15,x,C.stone)}
+  m.box(12,0,18,14,3,18,null);for(const y of [6,10])for(const x of [10,16])m.s(x,y,18,C.glass).s(x,y+1,18,C.glass);
+  m.cyl(13,13,2,15,20,C.cobble);for(let k=0;k<4;k++)m.cyl(13,13,3-k,21+k,21+k,C.indigo);m.box(13,25,13,13,28,13,C.log).box(14,27,13,16,28,13,C.gold);return m};
+B.mercado=()=>{const m=new M();base(m,-1,-3,15,10,C.gray);m.box(0,0,0,14,5,8,C.cream).box(1,0,1,13,5,7,null).box(1,0,8,13,3,8,C.glass).box(6,0,8,8,2,8,null);
+  for(let x=-1;x<=15;x++){const c=x%2?C.red:C.white;m.s(x,4,9,c).s(x,4,10,c).s(x,3,11,c)}
+  m.box(-1,6,-1,15,6,9,C.gray).box(3,6,8,11,8,8,C.yellow).box(4,7,8,10,7,8,C.red);
+  for(const [x,c] of [[2,C.orange],[3,C.red],[4,C.lime],[10,C.yellow],[11,C.orange],[12,C.green]])m.s(x,0,7,C.plank).s(x,1,7,c);return m};
+B.escola=()=>{const m=new M();base(m,-2,-2,26,16,C.grass);m.box(0,0,0,24,8,10,C.yellow).box(1,0,1,23,8,9,null).box(1,4,1,23,4,9,C.plank);
+  for(let x=2;x<=22;x+=4)for(const y of [1,5])m.box(x,y,10,x+1,y+1,10,C.glass);m.box(11,0,10,13,2,10,null).box(10,3,11,14,3,12,C.red);
+  m.box(-1,9,-1,25,9,11,C.red).box(9,9,4,15,13,8,C.yellow).box(9,14,4,15,14,8,C.red).cyl(12,9,1,12,12,C.white).s(12,12,9,C.black).s(12,11,9,C.black);
+  m.box(26,-1,12,40,-1,16,C.sand).box(28,0,13,28,6,13,C.white).box(29,5,13,31,6,13,C.green).s(30,5,13,C.yellow);
+  for(let x=32;x<=38;x+=3)m.box(x,0,14,x,1,14,C.plank);return m};
+/* veiculos */
+function carro(cor,faixa,lant,aero){const m=new M();m.box(0,-1,-1,14,-1,7,C.gray);m.box(0,0,0,14,1,6,cor);
+  for(const wx of [2,11])for(const wz of [0,6]){m.box(wx,0,wz,wx+1,1,wz,C.black);m.s(wx+1,0,wz,C.silver)}
+  m.box(14,0,2,14,0,4,C.black).s(14,1,1,C.yellow).s(14,1,5,C.yellow).s(0,1,1,lant).s(0,1,5,lant).box(0,0,2,0,0,4,C.black);
+  m.box(5,2,1,10,2,5,C.glass).box(6,2,2,8,2,4,null).s(6,2,2,C.black).s(6,2,4,C.black).s(8,2,2,C.gray).box(5,3,1,9,3,5,cor).box(6,3,2,8,3,4,C.glass);
+  m.s(9,2,0,cor).s(9,2,6,cor).box(0,1,3,14,1,3,faixa).box(5,3,3,9,3,3,faixa).s(1,2,1,aero).s(1,2,5,aero).box(0,3,0,1,3,6,aero);return m}
+B.carro_vermelho=()=>carro(C.red,C.white,C.orange,C.black);
+B.carro_rosa=()=>carro(C.pink,C.magenta,C.red,C.white);
+B.caminhao=()=>{const m=new M();m.box(-1,-1,-1,26,-1,8,C.gray);m.box(18,0,0,25,6,7,C.blue).box(19,4,0,24,5,7,C.glass).box(20,4,1,24,5,6,null).box(25,1,2,25,2,5,C.silver).s(25,3,1,C.yellow).s(25,3,6,C.yellow);
+  m.box(0,1,0,17,8,7,C.white).box(0,6,0,17,7,0,C.orange).box(0,6,7,17,7,7,C.orange).box(0,0,1,17,0,6,C.gray);
+  for(const x of [2,5,14,21,23])for(const z of [0,7])m.box(x,-0,z,x+1,1,z,C.black);m.box(18,7,1,18,9,1,C.silver);return m};
+B.onibus=()=>{const m=new M();m.box(-1,-1,-1,24,-1,8,C.gray);m.box(0,0,0,23,6,7,C.yellow).box(1,1,1,22,6,6,null);
+  for(let x=2;x<=20;x+=3)for(const z of [0,7])m.box(x,3,z,x+1,4,z,C.glass);m.box(23,3,1,23,5,6,C.glass).box(0,1,0,23,1,0,C.black).box(0,1,7,23,1,7,C.black);
+  m.box(21,0,7,22,4,7,C.glass).s(23,1,1,C.white).s(23,1,6,C.white).box(0,6,1,23,6,6,C.yellow).box(4,7,2,6,7,5,C.white);
+  for(const x of [3,4,18,19])for(const z of [0,7])m.s(x,0,z,C.black);m.box(23,0,2,23,0,5,C.black).box(0,2,2,0,4,5,C.glass);return m};
+B.aviao=()=>{const m=new M();for(let x=0;x<=28;x++){const r=x<3?1:x>24?1:2;m.cyl(0,0,0,0,0,null);for(let y=-r;y<=r;y++)for(let z=-r;z<=r;z++)if(y*y+z*z<=r*r+1)m.s(x,y+6,z+12,C.white)}
+  m.box(3,7,12,27,7,12,C.blue).box(26,6,11,28,7,13,C.glass).box(5,5,11,24,5,13,C.white);
+  for(let i=0;i<10;i++)m.box(10+i/2,5,12-2-i,15+i/3,5,12-2-i,C.white).box(10+i/2,5,14+i,15+i/3,5,14+i,C.white);
+  m.box(9,5,3,12,5,3,C.red).box(9,5,21,12,5,21,C.red);for(let i=0;i<5;i++){m.box(i,8+i,12,2+i/2,8+i,12,C.blue)}
+  for(let i=0;i<4;i++)m.box(0,6,8+i,2,6,8+i,C.white).box(0,6,16-i,2,6,16-i,C.white);
+  m.cyl(13,6,1,4,4,C.gray).cyl(13,18,1,4,4,C.gray);m.box(22,0,12,22,3,12,C.gray).box(12,0,9,12,3,9,C.gray).box(12,0,15,12,3,15,C.gray);
+  m.s(22,0,12,C.black).s(12,0,9,C.black).s(12,0,15,C.black);m.box(-3,-1,4,32,-1,20,C.gray);for(let x=-2;x<=31;x+=4)m.box(x,-1,12,x+1,-1,12,C.yellow);return m};
+B.barco=()=>{const m=new M();m.box(-4,-1,-4,24,-1,12,C.water);
+  for(let y=0;y<4;y++){const w=1+y;m.box(2-y,y,4-w,16+y,y,4+w,C.brown)}m.box(1,3,1,17,3,7,C.plank).box(18,2,3,20,3,5,C.brown).s(21,3,4,C.brown);
+  m.box(9,4,4,9,17,4,C.log);for(let y=0;y<12;y++){const w=Math.floor((12-y)*0.7);m.box(10,5+y,4,10+w,5+y,4,C.white)}for(let y=0;y<8;y++)m.box(8-Math.floor((8-y)*0.6),6+y,4,8,6+y,4,C.white);
+  m.box(9,18,4,11,18,4,C.red).box(3,4,3,6,6,5,C.white).box(4,6,3,5,6,5,C.glass);return m};
+B.helicoptero=()=>{const m=new M();m.box(-2,-1,-4,18,-1,10,C.gray);m.walls(0,-1,-2,16,-1,8,C.yellow);
+  m.box(2,1,1,10,5,5,C.red).box(9,2,1,11,5,5,C.glass).box(10,3,2,11,4,4,null).box(3,6,2,8,6,4,C.red).box(-8,3,3,2,4,3,C.red).box(-9,3,3,-9,7,3,C.red).box(-10,6,2,-8,6,4,C.black);
+  m.box(5,7,3,5,7,3,C.gray).box(-6,8,3,16,8,3,C.black).box(5,8,-6,5,8,12,C.black).box(2,0,0,10,0,0,C.gray).box(2,0,6,10,0,6,C.gray).s(3,1,1,C.gray).s(3,1,5,C.gray).s(9,1,1,C.gray).s(9,1,5,C.gray);return m};
+B.foguete=()=>{const m=new M();m.box(-6,-1,-6,6,-1,6,C.gray).walls(-6,-1,-6,6,-1,6,C.yellow);
+  m.cyl(0,0,3,3,22,C.white);for(let y=14;y<=16;y++)m.cyl(0,0,3,y,y,C.red);m.cyl(0,0,2,23,24,C.red).cyl(0,0,1,25,26,C.red).box(0,27,0,0,28,0,C.red);
+  for(const [x,z] of [[4,0],[-4,0],[0,4],[0,-4]])m.box(x,3,z,x,8,z,C.red).box(x*1.25,2,z*1.25,x*1.25,5,z*1.25,C.red);
+  m.s(3,18,0,C.glass).s(3,19,0,C.glass).s(0,18,3,C.glass).cyl(0,0,2,1,2,C.gray).cyl(0,0,2,0,0,C.orange).cyl(0,0,1,0,0,C.yellow);
+  m.box(6,0,-1,6,24,-1,C.gray).box(4,10,-1,6,10,-1,C.gray).box(4,20,-1,6,20,-1,C.gray);return m};
+B.trem=()=>{const m=new M();m.box(-4,-1,-1,30,-1,6,C.cobble);for(let x=-4;x<=30;x+=2)m.box(x,-1,0,x,-1,5,C.brown);m.box(-4,0,1,30,0,1,C.silver).box(-4,0,4,30,0,4,C.silver);
+  m.box(14,1,0,26,4,5,C.black).cyl(0,0,0,0,0,null);for(let x=14;x<=24;x++)m.cyl(0,0,0,0,0,null);m.box(15,4,1,24,6,4,C.black).box(14,1,0,18,9,5,C.red).box(15,6,0,17,7,0,C.glass).box(15,6,5,17,7,5,C.glass).box(13,10,-1,19,10,6,C.black);
+  m.box(23,7,2,24,10,3,C.black).box(22,11,1,25,11,4,C.black).box(26,1,1,27,2,4,C.red).s(26,5,2,C.yellow).s(26,5,3,C.yellow);
+  for(const x of [16,20,24])for(const z of [0,5])m.box(x,1,z,x+1,2,z,C.gold);
+  m.box(0,1,0,11,6,5,C.green).box(1,4,0,10,5,0,C.glass).box(1,4,5,10,5,5,C.glass).box(-1,7,-1,12,7,6,C.cream);for(const x of [1,9])for(const z of [0,5])m.box(x,1,z,x+1,2,z,C.black);return m};
+/* natureza */
+B.arvore=()=>{const m=new M();base(m,-7,-7,7,7);m.box(-1,0,-1,1,9,1,C.log);m.ball(0,11,0,6,4,6,C.leaves).ball(0,15,0,4,2,4,C.leaves);m.box(-4,0,0,-2,0,0,C.log).box(2,0,0,4,0,0,C.log);return m};
+B.palmeira=()=>{const m=new M();m.box(-6,-1,-6,6,-1,6,C.sand);for(let y=0;y<13;y++)m.s(Math.round(Math.sin(y/6)*2),y,0,y%3?C.log:C.brown);const tx=2,ty=13;
+  for(const [dx,dz] of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]])for(let i=1;i<=5;i++)m.s(tx+dx*i,ty+1-Math.floor(i*i/8),dz*i,C.lime);
+  m.s(tx,ty+1,0,C.green).s(tx+1,ty-1,0,C.brown).s(tx,ty-1,1,C.brown).s(tx-1,ty-1,0,C.brown);return m};
+B.cerejeira=()=>{const m=new M();base(m,-7,-7,7,7);m.box(0,0,0,0,7,0,C.log).line(0,5,0,-3,8,-2,C.log).line(0,6,0,3,9,2,C.log);
+  m.ball(-3,10,-2,4,3,4,C.pink).ball(3,11,2,4,3,4,C.pink).ball(0,12,0,4,3,4,C.pink);const r=rng(4);for(let i=0;i<14;i++)m.s(Math.floor(r()*13)-6,-1,Math.floor(r()*13)-6,C.pink);return m};
+B.cacto=()=>{const m=new M();m.box(-6,-1,-6,6,-1,6,C.sand);m.box(0,0,0,0,10,0,C.green).box(1,4,0,3,4,0,C.green).box(3,5,0,3,8,0,C.green).box(-3,6,0,-1,6,0,C.green).box(-3,7,0,-3,9,0,C.green);
+  m.s(0,11,0,C.pink).box(4,0,3,4,2,3,C.green).s(-4,0,-3,C.stone).s(-3,0,-3,C.stone).s(-4,1,-3,C.stone);return m};
+B.natal=()=>{const m=new M();base(m,-7,-7,7,7,C.snow);m.box(0,0,0,0,2,0,C.log);for(let L=0;L<5;L++){const y=3+L*3,r=6-L;m.cyl(0,0,r,y,y+1,C.darkgreen).cyl(0,0,r-1,y+2,y+2,C.darkgreen)}
+  const r=rng(9),cs=[C.red,C.gold,C.cyan,C.magenta];for(let i=0;i<26;i++){const y=3+Math.floor(r()*14),rad=6-Math.floor((y-3)/3),a=r()*6.28;m.s(Math.round(Math.cos(a)*rad),y,Math.round(Math.sin(a)*rad),cs[i%4])}
+  m.box(0,18,0,0,20,0,C.gold).box(-1,19,0,1,19,0,C.gold);for(const [x,z,c] of [[3,4,C.red],[-4,3,C.blue],[2,-4,C.green]])m.box(x,0,z,x+1,1,z+1,c).box(x,2,z,x+1,2,z,C.gold);return m};
+B.cogumelo=()=>{const m=new M();base(m,-8,-8,8,8);m.cyl(0,0,2,0,7,C.cream);m.ball(0,9,0,7,3,7,C.red);for(let y=6;y<=8;y++)m.cyl(0,0,6,y,y,null);m.cyl(0,0,6,7,7,C.cream).cyl(0,0,2,7,7,C.cream);
+  for(const [x,y,z] of [[0,12,0],[4,10,3],[-4,10,-3],[-3,11,3],[3,11,-3],[6,9,0],[-6,9,1],[0,10,6],[1,10,-6]])m.s(x,y,z,C.white);m.box(0,1,2,0,2,2,C.brown).s(-1,2,2,C.yellow).s(1,2,2,C.yellow);return m};
+/* cidade */
+B.praca=()=>{const m=new M();m.box(-8,-1,-8,8,-1,8,C.cobble);m.box(-3,0,-3,3,0,3,C.stone).box(-2,0,-2,2,0,2,C.water).box(0,0,0,0,3,0,C.stone).s(0,4,0,C.water).box(-1,3,0,1,3,0,C.water).box(0,3,-1,0,3,1,C.water);
+  for(const [x,z,v] of [[-6,0,1],[6,0,1],[0,-6,0],[0,6,0]])v?m.box(x,0,z-2,x,0,z+2,C.plank).box(x+(x<0?-1:1),1,z-2,x+(x<0?-1:1),1,z+2,C.plank):m.box(x-2,0,z,x+2,0,z,C.plank).box(x-2,1,z+(z<0?-1:1),x+2,1,z+(z<0?-1:1),C.plank);
+  for(const [x,z] of [[-7,-7],[7,-7],[-7,7],[7,7]])m.box(x,0,z,x,4,z,C.black).s(x,5,z,C.yellow);
+  for(const [x,z] of [[-6,-4],[6,4],[-4,6],[4,-6]])m.s(x,0,z,C.leaves).s(x,1,z,C.red);return m};
+B.farol=()=>{const m=new M();m.box(-8,-1,-8,8,-1,8,C.water);m.ball(0,0,0,6,2,6,C.stone);m.box(-6,0,-6,6,0,6,null);m.cyl(0,0,6,-1,0,C.cobble);
+  for(let y=1;y<=18;y++)m.cyl(0,0,y<10?3:2,y,y,Math.floor((y-1)/3)%2?C.white:C.red);m.cyl(0,0,3,19,19,C.black).cyl(0,0,2,20,22,C.glass).box(0,20,0,0,21,0,C.yellow).cyl(0,0,3,23,23,C.red).cyl(0,0,1,24,25,C.red);
+  m.box(0,1,3,0,2,3,C.brown).box(-1,8,3,-1,9,3,C.glass);return m};
+B.moinho=()=>{const m=new M();base(m,-6,-6,6,6);for(let y=0;y<=12;y++)m.cyl(0,0,y<6?4:3,y,y,C.stone,true);for(let k=0;k<4;k++)m.cyl(0,0,4-k,13+k,13+k,C.brown);
+  m.box(0,0,4,0,2,4,C.plank).s(0,6,3,C.glass).s(-3,8,0,C.glass);m.box(0,10,4,0,10,6,C.log);
+  for(let i=-8;i<=8;i++){m.s(i,10+i,6,Math.abs(i)>1?C.white:C.log).s(i,10-i,6,Math.abs(i)>1?C.white:C.log)}for(let i=2;i<=8;i++){m.s(i+1,10+i,6,C.white).s(-i-1,10-i,6,C.white).s(i+1,10-i,6,C.white).s(-i-1,10+i,6,C.white)}return m};
+B.relogio=()=>{const m=new M();base(m,-5,-5,5,5,C.cobble);m.box(-3,0,-3,3,18,3,C.brick).box(-4,0,-4,4,1,4,C.stone).box(-1,0,3,1,2,3,C.brown);
+  for(const s of [1,-1]){m.box(-2,13,s*3+s,2,17,s*3+s,C.white).box(s*3+s,13,-2,s*3+s,17,2,C.white);m.s(0,15,s*4,C.black).s(0,16,s*4,C.black).s(1,15,s*4,C.black).s(s*4,15,0,C.black).s(s*4,16,0,C.black).s(s*4,15,1,C.black)}
+  m.box(-4,19,-4,4,19,4,C.stone);for(let k=0;k<5;k++)m.box(-3+k,20+k,-3+k,3-k,20+k,3-k,C.navy);m.box(0,25,0,0,27,0,C.gold);return m};
+B.ponte=()=>{const m=new M();m.box(-3,-4,-2,31,-4,8,C.water).box(-3,-4,-2,1,4,8,C.grass).box(27,-4,-2,31,4,8,C.grass);
+  for(let x=2;x<=26;x++){const h=4+Math.round(2*Math.sin((x-2)/24*Math.PI));m.box(x,h,0,x,h,6,C.plank).s(x,h+1,0,C.log).s(x,h+1,6,C.log);
+    const a=Math.round(3*Math.sin((x-2)/24*Math.PI));m.box(x,-3,0,x,h-1-a,0,null).s(x,h-1-a,0,C.stone).s(x,h-1-a,6,C.stone)}
+  for(const x of [2,14,26])m.box(x,1,0,x,8,0,C.stone).box(x,1,6,x,8,6,C.stone).s(x,9,0,C.yellow).s(x,9,6,C.yellow);return m};
+B.roda=()=>{const m=new M();m.box(-12,-1,-4,12,-1,4,C.cobble);const R=11,cy=13;for(let a=0;a<64;a++){const t=a/64*Math.PI*2;m.s(Math.round(Math.cos(t)*R),cy+Math.round(Math.sin(t)*R),0,C.white).s(Math.round(Math.cos(t)*R),cy+Math.round(Math.sin(t)*R),2,C.white)}
+  for(let s=0;s<8;s++){const t=s/8*Math.PI*2;m.line(0,cy,0,Math.round(Math.cos(t)*R),cy+Math.round(Math.sin(t)*R),0,C.silver).line(0,cy,2,Math.round(Math.cos(t)*R),cy+Math.round(Math.sin(t)*R),2,C.silver)}
+  m.box(0,cy,-1,0,cy,3,C.gray);m.line(-7,0,-1,0,cy,-1,C.gray).line(7,0,-1,0,cy,-1,C.gray).line(-7,0,3,0,cy,3,C.gray).line(7,0,3,0,cy,3,C.gray);
+  const cs=[C.red,C.yellow,C.blue,C.lime,C.orange,C.magenta,C.cyan,C.pink];for(let s=0;s<8;s++){const t=s/8*Math.PI*2+0.2,x=Math.round(Math.cos(t)*R),y=cy+Math.round(Math.sin(t)*R);m.box(x-1,y-3,0,x+1,y-1,2,cs[s]).box(x,y-2,0,x,y-2,2,C.glass)}return m};
+B.parquinho=()=>{const m=new M();m.box(-1,-1,-1,20,-1,14,C.sand);m.box(1,0,1,1,5,1,C.red).box(5,0,1,5,5,1,C.red).box(1,6,1,5,6,1,C.red);m.box(2,0,4,4,5,6,C.blue).box(2,6,4,4,6,6,C.yellow);
+  for(let i=0;i<6;i++)m.box(5+i,5-i,4,5+i,5-i,6,C.yellow);for(let y=0;y<6;y++)m.s(1,y,5,y%2?C.white:null).box(0,y,4,0,y,4,C.red).box(0,y,6,0,y,6,C.red);
+  m.box(2,3,1,2,4,1,C.gray).box(4,3,1,4,4,1,C.gray).s(2,2,1,C.plank).s(4,2,1,C.plank);m.box(13,0,2,13,0,10,C.plank).s(13,1,6,C.gray).box(12,1,2,14,1,2,C.red).box(12,1,10,14,1,10,C.red);
+  m.cyl(16,12,1,0,1,C.orange);for(let x=8;x<=18;x+=2)m.s(x,0,13,C.leaves);return m};
+/* jogos */
+B.labirinto=()=>{const m=new M();const N=10,Cc=3,S=N*Cc+1,H=3,r=rng(21);m.box(0,-1,0,S-1,-1,S-1,C.sand).box(0,0,0,S-1,H,S-1,C.green);
+  const seen=new Set(['0,0']),st=[[0,0]];const carve=(cx,cz)=>m.box(1+cx*Cc,0,1+cz*Cc,cx*Cc+Cc-1,H,cz*Cc+Cc-1,null);carve(0,0);
+  while(st.length){const [cx,cz]=st[st.length-1];const nb=[[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dz])=>[cx+dx,cz+dz,dx,dz]).filter(([x,z])=>x>=0&&z>=0&&x<N&&z<N&&!seen.has(x+','+z));
+    if(!nb.length){st.pop();continue}const [nx,nz,dx,dz]=nb[Math.floor(r()*nb.length)];seen.add(nx+','+nz);carve(nx,nz);
+    if(dx){const wx=cx*Cc+(dx>0?Cc:0);m.box(wx,0,1+cz*Cc,wx,H,cz*Cc+Cc-1,null)}else{const wz=cz*Cc+(dz>0?Cc:0);m.box(1+cx*Cc,0,wz,cx*Cc+Cc-1,H,wz,null)}st.push([nx,nz])}
+  m.box(1,0,0,2,2,0,null).box(S-3,0,S-1,S-2,2,S-1,null).box(16,-1,16,17,-1,17,C.gold);for(let i=0;i<5;i++)m.s(1+Math.floor(r()*N)*Cc,0,1+Math.floor(r()*N)*Cc,C.leaves);return m};
+B.countdown=()=>{const m=new M();m.box(-2,-1,-2,22,-1,22,C.obsidian);const cs=[C.red,C.orange,C.yellow,C.lime,C.cyan,C.blue,C.violet,C.magenta];
+  for(let x=0;x<=20;x++)for(let z=0;z<=20;z++)m.s(x,6,z,(x+z)%2?cs[(x>>2)%8]:C.white);m.walls(-1,7,-1,21,10,21,C.glass);for(const [x,z] of [[-1,-1],[21,-1],[-1,21],[21,21]])m.box(x,-1,z,x,11,z,C.iron);
+  m.box(8,0,8,12,0,12,C.lava);return m};
+B.parkour=()=>{const m=new M();m.box(-2,-1,-2,4,-1,4,C.stone);const r=rng(5);let x=1,y=0,z=1;const cs=[C.lime,C.cyan,C.yellow,C.orange,C.pink,C.blue];
+  for(let i=0;i<22;i++){const a=i*0.55;x=Math.round(9+Math.cos(a)*(9-i*0.15));z=Math.round(9+Math.sin(a)*(9-i*0.15));y=1+Math.floor(i*0.9);m.s(x,y,z,cs[i%6]);if(r()<.3)m.s(x+1,y,z,cs[i%6])}
+  m.box(x-1,y+1,z-1,x+1,y+1,z+1,C.gold).box(x,y+2,z,x,y+4,z,C.log).box(x+1,y+3,z,x+2,y+4,z,C.red);m.box(0,0,0,2,0,2,C.green);return m};
+B.futebol=()=>{const m=new M();m.box(-4,-1,-4,40,-1,24,C.grass);m.box(0,-1,0,36,-1,20,C.green);m.walls(0,-1,0,36,-1,20,C.white).box(18,-1,0,18,-1,20,C.white);
+  for(let a=0;a<24;a++){const t=a/24*6.28;m.s(18+Math.round(Math.cos(t)*4),-1,10+Math.round(Math.sin(t)*4),C.white)}m.walls(0,-1,5,5,-1,15,C.white).walls(31,-1,5,36,-1,15,C.white);
+  for(const x of [-1,37]){m.box(x,0,7,x,3,7,C.white).box(x,0,13,x,3,13,C.white).box(x,3,7,x,3,13,C.white)}
+  for(let i=0;i<3;i++)m.box(2,i,-2-i,34,i,-2-i,i%2?C.blue:C.yellow).box(2,i,22+i,34,i,22+i,i%2?C.red:C.white);m.s(18,0,10,C.white);return m};
+/* tecnologia */
+B.pc=()=>{const m=new M();m.box(0,-1,0,30,-1,30,C.green);m.walls(0,0,0,30,13,30,C.iron).box(0,14,0,30,14,30,C.iron).box(30,2,3,30,11,27,C.glass).box(3,14,3,27,14,27,C.glass).box(13,0,0,16,3,0,null).box(12,5,0,17,5,0,C.cyan);
+  for(let z=3;z<28;z+=4)m.box(2,-1,z,28,-1,z,C.gold);for(let x=4;x<28;x+=6)m.box(x,-1,2,x,-1,28,C.gold);m.box(14,-1,1,15,-1,15,C.orange);
+  m.box(4,0,17,9,0,22,C.iron).box(5,1,18,8,3,21,C.gray).box(5,4,18,8,4,21,C.black).box(6,4,18,7,4,21,C.cyan).box(5,4,19,8,4,20,C.cyan);
+  for(const x of [11,13,15,17])m.box(x,0,16,x,0,26,C.gold).box(x,1,16,x,4,26,C.blue).box(x,2,18,x,3,19,C.black).box(x,2,22,x,3,23,C.black);
+  m.box(6,0,27,25,3,29,C.black).box(6,4,28,25,4,28,C.red).cyl(10,28,1,4,4,C.gray).cyl(21,28,1,4,4,C.gray);m.box(20,0,18,26,0,21,C.black).box(22,1,19,24,1,20,C.white);
+  m.box(20,0,2,28,6,8,C.black).box(21,1,9,27,5,9,C.gray);for(let x=22;x<27;x+=2)m.box(x,1,9,x,5,9,C.black);m.line(27,0,9,27,0,26,C.red).line(26,0,10,26,0,25,C.yellow);return m};
+B.esp32=()=>{const m=new M();m.box(0,0,0,29,0,13,C.black);for(let x=1;x<=28;x+=2){m.s(x,1,0,C.gold).s(x,1,13,C.gold).s(x,0,0,C.gold).s(x,0,13,C.gold);m.box(x,-3,0,x,-1,0,C.silver).box(x,-3,13,x,-1,13,C.silver)}
+  m.box(13,1,3,25,2,10,C.silver).box(14,3,4,24,3,9,C.silver).box(16,3,5,21,3,5,C.black).box(16,3,7,20,3,7,C.black);
+  for(let z=3;z<=10;z+=2)m.box(26,1,z,28,1,z,C.gold);m.box(26,1,3,26,1,10,C.gold);m.box(-2,1,5,2,3,8,C.silver).box(-2,2,6,-2,2,7,C.black);
+  m.box(5,1,2,6,2,3,C.white).box(5,1,10,6,2,11,C.white).s(5,3,2,C.black).s(5,3,10,C.black).s(9,1,4,C.red).s(9,1,9,C.blue).box(8,1,6,10,1,7,C.gray);return m};
+B.robo=()=>{const m=new M();base(m,-6,-6,6,6,C.stone);m.box(-3,0,-1,-1,4,1,C.gray).box(1,0,-1,3,4,1,C.gray).box(-3,0,1,-1,0,2,C.black).box(1,0,1,3,0,2,C.black);
+  m.box(-4,5,-2,4,11,2,C.silver).box(-2,7,2,2,9,2,C.navy).s(-1,8,2,C.lime).s(0,8,2,C.red).s(1,8,2,C.yellow);m.box(-6,6,-1,-5,11,1,C.gray).box(5,6,-1,6,11,1,C.gray).box(-6,4,-1,-5,5,1,C.orange).box(5,4,-1,6,5,1,C.orange);
+  m.box(-1,12,-1,1,12,1,C.gray).box(-3,13,-2,3,17,2,C.silver).box(-2,15,2,-1,16,2,C.cyan).box(1,15,2,2,16,2,C.cyan).box(-1,14,2,1,14,2,C.black);m.box(0,18,0,0,20,0,C.gray).s(0,21,0,C.red);return m};
+B.setup=()=>{const m=new M();m.box(-1,-1,-2,22,-1,12,C.plank);m.box(0,-1,0,21,-1,10,C.brown);m.box(9,0,4,12,0,6,C.black).box(10,1,5,11,3,5,C.black);
+  m.box(1,4,5,20,15,5,C.black).box(2,5,6,19,14,6,C.navy);const lines=[[3,13,9,C.violet],[3,12,14,C.cyan],[5,11,11,C.lime],[5,10,15,C.white],[5,9,8,C.orange],[3,8,12,C.violet],[3,7,6,C.cyan]];
+  for(const [x,y,w,c] of lines)m.box(x,y,6,x+w-1,y,6,c);m.box(2,0,7,18,0,10,C.gray);for(let x=3;x<=17;x+=1)for(let z=8;z<=9;z++)if((x+z)%2)m.s(x,1,z,C.white);
+  m.box(19,0,8,20,0,9,C.white).box(-3,0,2,-2,5,4,C.black).s(-2,4,5,C.cyan);return m};
+B.satelite=()=>{const m=new M();m.box(-2,0,-2,2,4,2,C.gold);m.box(-14,2,-1,-3,2,1,C.blue).box(3,2,-1,14,2,1,C.blue);for(let x=-13;x<=13;x+=3)if(Math.abs(x)>3)m.box(x,2,-1,x,2,1,C.silver);
+  m.box(-3,2,0,3,2,0,C.silver);m.ball(0,7,0,3,1,3,C.white);m.box(0,5,0,0,10,0,C.silver).s(0,11,0,C.red);m.s(0,2,3,C.cyan).s(0,3,3,C.black);return m};
+/* pacotes */
+B.pack_cidade=()=>{const m=new M();m.box(-3,-2,-3,62,-2,30,C.grass);m.box(-3,-2,14,62,-2,17,C.gray);for(let x=0;x<=60;x+=5)m.box(x,-2,15,x+2,-2,15,C.white);
+  m.put(B.chale(),0,-1,1).put(B.sobrado(),16,-1,0).put(B.moderna(),35,-1,1).put(B.praca(),10,-1,24).put(B.arvore(),33,-1,24).put(B.carro_vermelho(),42,-1,19).put(B.mercado(),46,-1,0);return m};
+B.pack_lobby=()=>{const m=new M();m.box(-4,-2,-4,56,-2,28,C.obsidian);m.put(B.countdown(),0,-1,0).put(B.parkour(),30,-1,2);for(let i=0;i<5;i++)m.box(20+i*2,-1,25,20+i*2,3,25,[C.red,C.yellow,C.lime,C.cyan,C.magenta][i]);return m};
+B.pack_tech=()=>{const m=new M();m.box(-3,-2,-3,70,-2,34,C.white);m.put(B.pc(),0,-1,0).put(B.esp32(),38,3,2).put(B.robo(),48,-1,24).put(B.setup(),36,-1,20);return m};
+
+/* ======================= CATALOGO ======================= */
+const ITEMS=[
+ {id:'castelo',name:'Castelo do Reino',cat:'Casas',price:39.9,desc:'Muralha com ameias, 4 torres com bandeiras, fosso com água, ponte levadiça e torre central.',inc:'Muralha, 4 torres, fosso, torre do rei',pop:1,novo:1},
+ {id:'chale',name:'Chalé de Madeira',cat:'Casas',price:9.9,desc:'Casinha aconchegante com telhado vermelho de duas águas, chaminé e janelas.',inc:'Casa mobiliada, chaminé',pop:5},
+ {id:'sobrado',name:'Sobrado de Tijolo',cat:'Casas',price:14.9,desc:'Dois andares, escada interna, janelas nos dois pisos e varanda na entrada.',inc:'2 andares, escada, varanda',pop:8},
+ {id:'moderna',name:'Casa Moderna',cat:'Casas',price:19.9,desc:'Linhas retas, parede de vidro, terraço com jardim e piscina no quintal.',inc:'Casa, terraço, piscina',pop:3},
+ {id:'praia',name:'Casa de Praia',cat:'Casas',price:14.9,desc:'Palafita azul-turquesa sobre a areia, com telhado laranja e escada até o mar.',inc:'Casa, praia, mar',pop:12},
+ {id:'cabana',name:'Cabana de Troncos',cat:'Casas',price:9.9,desc:'Toras alternadas, telhado verde-musgo e chaminé de pedra. Perfeita para mundos de floresta.',inc:'Cabana, chaminé, deck',pop:20},
+ {id:'arvore_casa',name:'Casa na Árvore',cat:'Casas',price:16.9,desc:'Casinha laranja no alto de uma árvore, com plataforma, escada e balanço.',inc:'Árvore, casa, balanço',pop:6,novo:1},
+ {id:'mercado',name:'Mercadinho',cat:'Cidade',price:12.9,desc:'Fachada de vidro, toldo listrado e caixas de frutas na vitrine.',inc:'Loja com toldo e frutas',pop:22},
+ {id:'escola',name:'Escola com Pátio',cat:'Cidade',price:24.9,desc:'Prédio amarelo de 2 andares, relógio na fachada, mastro com bandeira verde e amarela e pátio.',inc:'Escola, pátio, bancos, bandeira',pop:9},
+ {id:'carro_vermelho',name:'Esportivo Vermelho',cat:'Veículos',price:7.9,desc:'Faixa de corrida branca, aerofólio preto, teto solar e lanternas laranja.',inc:'Carro + vaga',pop:2},
+ {id:'carro_rosa',name:'Esportivo Rosa',cat:'Veículos',price:7.9,desc:'Edição especial com faixa magenta, aerofólio branco e lanternas vermelhas.',inc:'Carro + vaga',pop:4},
+ {id:'caminhao',name:'Caminhão Baú',cat:'Veículos',price:9.9,desc:'Cabine azul, baú branco com faixa laranja e seis rodas.',inc:'Caminhão + vaga',pop:24},
+ {id:'onibus',name:'Ônibus Escolar',cat:'Veículos',price:9.9,desc:'Amarelo clássico com fileira de janelas, porta lateral e faróis.',inc:'Ônibus + vaga',pop:18},
+ {id:'aviao',name:'Avião de Passageiros',cat:'Veículos',price:19.9,desc:'Fuselagem branca com faixa azul, turbinas, cauda e trem de pouso, numa pista.',inc:'Avião + pista',pop:7,novo:1},
+ {id:'barco',name:'Veleiro',cat:'Veículos',price:12.9,desc:'Casco de madeira, cabine, mastro alto e velas brancas sobre a água.',inc:'Barco + água',pop:19},
+ {id:'helicoptero',name:'Helicóptero',cat:'Veículos',price:12.9,desc:'Vermelho, com hélice principal, rotor de cauda e heliponto amarelo.',inc:'Helicóptero + heliponto',pop:15},
+ {id:'foguete',name:'Foguete Espacial',cat:'Veículos',price:17.9,desc:'Foguete branco e vermelho com aletas, motor aceso e torre de lançamento.',inc:'Foguete, base, torre',pop:10},
+ {id:'trem',name:'Trem a Vapor',cat:'Veículos',price:16.9,desc:'Locomotiva vermelha e preta com chaminé, vagão verde e trilhos.',inc:'Locomotiva, vagão, trilhos',pop:16},
+ {id:'arvore',name:'Árvore Grande',cat:'Natureza',price:3.9,desc:'Copa cheia em duas camadas e raízes aparentes.',inc:'Árvore',pop:25},
+ {id:'palmeira',name:'Palmeira com Cocos',cat:'Natureza',price:3.9,desc:'Tronco curvado, folhas abertas e cocos, numa ilhota de areia.',inc:'Palmeira, areia',pop:26},
+ {id:'cerejeira',name:'Cerejeira',cat:'Natureza',price:4.9,desc:'Galhos tortos, flores cor-de-rosa e pétalas caídas no chão.',inc:'Árvore, pétalas',pop:13},
+ {id:'cacto',name:'Cacto do Deserto',cat:'Natureza',price:2.9,desc:'Cacto com braços, flor no topo e pedras na areia.',inc:'Cacto, pedras',pop:30},
+ {id:'cogumelo',name:'Cogumelo Gigante',cat:'Natureza',price:6.9,desc:'Chapéu vermelho com bolinhas brancas e uma portinha no caule.',inc:'Cogumelo-casa',pop:17},
+ {id:'natal',name:'Árvore de Natal',cat:'Natureza',price:6.9,desc:'Pinheiro nevado com bolas coloridas, estrela dourada e presentes.',inc:'Árvore, estrela, presentes',pop:11,novo:1},
+ {id:'praca',name:'Praça com Fonte',cat:'Cidade',price:9.9,desc:'Fonte de água, quatro bancos, postes de luz e canteiros de flores.',inc:'Praça completa',pop:14},
+ {id:'farol',name:'Farol',cat:'Cidade',price:12.9,desc:'Torre listrada de vermelho e branco, lâmpada de vidro e rochas no mar.',inc:'Farol, rochas, mar',pop:21},
+ {id:'moinho',name:'Moinho de Vento',cat:'Cidade',price:12.9,desc:'Torre de pedra com telhado cônico e pás grandes em X.',inc:'Moinho',pop:27},
+ {id:'relogio',name:'Torre do Relógio',cat:'Cidade',price:14.9,desc:'Torre de tijolos com relógio nas quatro faces e telhado em pirâmide.',inc:'Torre, 4 relógios',pop:23},
+ {id:'ponte',name:'Ponte em Arco',cat:'Cidade',price:11.9,desc:'Arco de pedra sobre um rio, piso de madeira e lampiões.',inc:'Ponte, rio, margens',pop:28},
+ {id:'roda',name:'Roda-Gigante',cat:'Cidade',price:22.9,desc:'Aro duplo com raios e oito cabines coloridas.',inc:'Roda-gigante, base',pop:5,novo:1},
+ {id:'parquinho',name:'Parquinho',cat:'Cidade',price:9.9,desc:'Escorregador, balanço, gangorra e caixa de areia.',inc:'4 brinquedos',pop:12},
+ {id:'labirinto',name:'Labirinto Esconde-Esconde',cat:'Jogos',price:14.9,desc:'Paredes verdes de 4 blocos, caminhos sem saída, esconderijos e centro dourado.',inc:'Labirinto 31×31',pop:3},
+ {id:'countdown',name:'Arena Countdown',cat:'Jogos',price:16.9,desc:'Piso colorido suspenso, paredes de vidro e lava embaixo para quem cair.',inc:'Arena pronta para /cd',pop:9},
+ {id:'parkour',name:'Torre de Parkour',cat:'Jogos',price:12.9,desc:'Espiral de 22 saltos coloridos subindo até uma plataforma de ouro com bandeira.',inc:'Percurso + chegada',pop:6},
+ {id:'futebol',name:'Campo de Futebol',cat:'Jogos',price:19.9,desc:'Campo com marcação completa, gols e arquibancadas dos dois lados.',inc:'Campo, gols, arquibancada',pop:8},
+ {id:'pc',name:'Dentro do Computador',cat:'Tecnologia',price:29.9,desc:'PC gigante para caminhar dentro: CPU, cooler, RAM, GPU, SSD e fonte com cabos.',inc:'Gabinete, 6 peças, trilhas',pop:2,novo:1},
+ {id:'esp32',name:'ESP32 Gigante',cat:'Tecnologia',price:14.9,desc:'Placa de desenvolvimento com módulo blindado, antena, pinos, USB e LEDs.',inc:'Placa em escala gigante',pop:10},
+ {id:'robo',name:'Robô Amigo',cat:'Tecnologia',price:11.9,desc:'Robô com painel de LEDs no peito, olhos azuis e antena.',inc:'Robô em pedestal',pop:7},
+ {id:'setup',name:'Setup do Programador',cat:'Tecnologia',price:12.9,desc:'Mesa com monitor mostrando código colorido, teclado, mouse e gabinete.',inc:'Mesa, monitor, teclado',pop:14},
+ {id:'satelite',name:'Satélite',cat:'Tecnologia',price:9.9,desc:'Corpo dourado, painéis solares azuis e antena parabólica.',inc:'Satélite',pop:29},
+ {id:'pack_cidade',name:'Pacote Cidade Completa',cat:'Pacotes',price:59.9,desc:'Chalé, sobrado, casa moderna, mercadinho, praça, árvore e carro numa rua pronta.',inc:'7 construções + rua',pop:1,novo:1},
+ {id:'pack_lobby',name:'Pacote Lobby de Minijogos',cat:'Pacotes',price:24.9,desc:'Arena Countdown e Torre de Parkour lado a lado, com totens coloridos.',inc:'2 minijogos + base',pop:4},
+ {id:'pack_tech',name:'Pacote Academia Tech',cat:'Pacotes',price:49.9,desc:'PC gigante, ESP32, setup do programador e robô para um mundo educativo.',inc:'4 construções',pop:3},
+];
+
+/* ======================= RENDER 3D ======================= */
+const DIRS=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+const FACE=[[[1,0,0],[1,1,0],[1,1,1],[1,0,1]],[[0,0,0],[0,0,1],[0,1,1],[0,1,0]],[[0,1,0],[0,1,1],[1,1,1],[1,1,0]],[[0,0,0],[1,0,0],[1,0,1],[0,0,1]],[[0,0,1],[1,0,1],[1,1,1],[0,1,1]],[[0,0,0],[0,1,0],[1,1,0],[1,0,0]]];
+const LIGHT=(()=>{const l=[0.45,1,0.65],n=Math.hypot(...l);return l.map(v=>v/n)})();
+function hexToRgb(h){const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
+const rgbCache={};function rgb(c){return rgbCache[c]||(rgbCache[c]=hexToRgb(c))}
+function prepare(model){
+  const faces=[];let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
+  for(const [k,c] of model.v){const [x,y,z]=k.split(',').map(Number);mn=[Math.min(mn[0],x),Math.min(mn[1],y),Math.min(mn[2],z)];mx=[Math.max(mx[0],x),Math.max(mx[1],y),Math.max(mx[2],z)];
+    const tr=ALPHA[c]!==undefined;
+    for(let d=0;d<6;d++){const D=DIRS[d];const nc=model.v.get((x+D[0])+','+(y+D[1])+','+(z+D[2]));
+      if(!nc||(!tr&&ALPHA[nc]!==undefined)||(tr&&nc!==c&&ALPHA[nc]!==undefined)){
+        const sh=0.58+0.42*Math.max(0,D[0]*LIGHT[0]+D[1]*LIGHT[1]+D[2]*LIGHT[2]);const [r,g,b]=rgb(c);
+        faces.push({x,y,z,d,fill:`rgba(${r*sh|0},${g*sh|0},${b*sh|0},${tr?ALPHA[c]:1})`,stroke:`rgba(${r*sh*.82|0},${g*sh*.82|0},${b*sh*.82|0},${tr?ALPHA[c]*0.6:1})`})}}}
+  const size=[mx[0]-mn[0]+1,mx[1]-mn[1]+1,mx[2]-mn[2]+1];const center=[(mn[0]+mx[0]+1)/2,(mn[1]+mx[1]+1)/2,(mn[2]+mx[2]+1)/2];
+  const colors={};for(const c of model.v.values())colors[c]=(colors[c]||0)+1;
+  return{faces,size,center,count:model.v.size,radius:Math.hypot(size[0],size[1]*1.1,size[2])/2,colors};
+}
+function draw(canvas,P,yaw,pitch,zoom){
+  const dpr=Math.min(window.devicePixelRatio||1,2);const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}
+  const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  const ca=Math.cos(yaw),sa=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);const s=Math.min(w,h)*0.46/P.radius*(zoom||1);
+  const [cx,cy,cz]=P.center;const ox=w/2,oy=h/2;
+  const vis=[];for(let d=0;d<6;d++){const D=DIRS[d];const rz=D[0]*sa+D[2]*ca;vis[d]=D[1]*sp+rz*cp>0.001}
+  const list=[];for(const f of P.faces){if(!vis[f.d])continue;const X=f.x+.5-cx,Y=f.y+.5-cy,Z=f.z+.5-cz;const rz=X*sa+Z*ca;f._dep=rz*cp+Y*sp;list.push(f)}
+  list.sort((a,b)=>a._dep-b._dep);
+  ctx.lineWidth=Math.max(0.5,s*0.06);ctx.lineJoin='round';
+  for(const f of list){const q=FACE[f.d];ctx.beginPath();
+    for(let i=0;i<4;i++){const X=f.x+q[i][0]-cx,Y=f.y+q[i][1]-cy,Z=f.z+q[i][2]-cz;const rx=X*ca-Z*sa,rz=X*sa+Z*ca;const px=ox+rx*s,py=oy-(Y*cp-rz*sp)*s;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}
+    ctx.closePath();ctx.fillStyle=f.fill;ctx.fill();if(s>3){ctx.strokeStyle=f.stroke;ctx.stroke()}}
+}
+
+/* ======================= APP ======================= */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PREP={};function prep(id){return PREP[id]||(PREP[id]=prepare(B[id]()))}
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const priceHTML=v=>{const [r,c]=v.toFixed(2).split('.');return `<span class="cur">R$</span>${r}<span class="cents">,${c}</span>`};
+const CATS=['Todos','Casas','Veículos','Natureza','Cidade','Jogos','Tecnologia','Pacotes'];
+let cat='Todos',query='',sort='pop';const cart=[];
+const grid=document.getElementById('grid');
+
+function renderChips(){const el=document.getElementById('chips');el.innerHTML='';
+  for(const c of CATS){const n=c==='Todos'?ITEMS.length:ITEMS.filter(i=>i.cat===c).length;const b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed',c===cat);b.innerHTML=`${c}<small>${n}</small>`;b.onclick=()=>{cat=c;renderChips();renderGrid()};el.appendChild(b)}}
+const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){const cv=e.target;draw(cv,prep(cv.dataset.id),-0.75,0.58);io.unobserve(cv)}},{rootMargin:'200px'});
+function renderGrid(){
+  let list=ITEMS.filter(i=>(cat==='Todos'||i.cat===cat)&&(!query||(i.name+' '+i.desc+' '+i.cat).toLowerCase().includes(query)));
+  if(sort==='pop')list.sort((a,b)=>a.pop-b.pop);if(sort==='low')list.sort((a,b)=>a.price-b.price);if(sort==='high')list.sort((a,b)=>b.price-a.price);if(sort==='size')list.sort((a,b)=>prep(b.id).count-prep(a.id).count);
+  grid.innerHTML='';if(!list.length){grid.innerHTML='<p class="empty">Nenhuma construção encontrada. Tente outra palavra.</p>';return}
+  for(const it of list){const P=prep(it.id);const card=document.createElement('article');card.className='card';
+    card.innerHTML=`<div class="thumb" role="button" tabindex="0" aria-label="Ver ${it.name} em 3D"><canvas data-id="${it.id}"></canvas><span class="badge">${it.cat}</span>${it.novo?'<span class="badge new">Novo</span>':''}<span class="tag">${brl(it.price)}</span></div>
+      <div class="body"><h3>${it.name}</h3><div class="meta">${P.size[0]}×${P.size[1]}×${P.size[2]} · ${P.count.toLocaleString('pt-BR')} blocos</div><p class="desc">${it.desc}</p>
+      <div class="foot"><div class="price" aria-label="${brl(it.price)}">${priceHTML(it.price)}</div><button class="add" data-add="${it.id}">${inCart(it.id)?'Reservado ✓':'Reservar'}</button></div></div>`;
+    if(inCart(it.id))card.querySelector('.add').classList.add('done');
+    const th=card.querySelector('.thumb'),cv=card.querySelector('canvas');th.onclick=()=>openModal(it.id);th.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(it.id)}};
+    let raf=0,yaw=-0.75;th.onmouseenter=()=>{if(reduce)return;let last=performance.now();const loop=t=>{yaw+=(t-last)/1000*0.9;last=t;draw(cv,P,yaw,0.58);raf=requestAnimationFrame(loop)};raf=requestAnimationFrame(loop)};
+    th.onmouseleave=()=>{cancelAnimationFrame(raf)};
+    card.querySelector('.add').onclick=()=>toggleCart(it.id);grid.appendChild(card);io.observe(cv)}
+}
+/* hero */
+const heroIds=['castelo','pc','roda','aviao','pack_cidade','foguete'];let hi=0,hYaw=-0.6;const hc=document.getElementById('heroCanvas');
+function heroSet(){document.getElementById('heroName').textContent=ITEMS.find(i=>i.id===heroIds[hi]).name}heroSet();
+let hDrag=null;hc.onpointerdown=e=>{hDrag=e.clientX;hc.setPointerCapture(e.pointerId)};hc.onpointermove=e=>{if(hDrag!=null){hYaw+=(e.clientX-hDrag)*0.01;hDrag=e.clientX}};hc.onpointerup=()=>hDrag=null;
+hc.ondblclick=()=>openModal(heroIds[hi]);
+let hT=performance.now(),hSwitch=0;function heroLoop(t){const dt=(t-hT)/1000;hT=t;if(!reduce&&hDrag==null){hYaw+=dt*0.5;hSwitch+=dt;if(hSwitch>9){hSwitch=0;hi=(hi+1)%heroIds.length;heroSet()}}draw(hc,prep(heroIds[hi]),hYaw,0.55);requestAnimationFrame(heroLoop)}
+/* modal */
+const ov=document.getElementById('overlay'),mc=document.getElementById('mCanvas');let mId=null,mYaw=-0.75,mPitch=0.55,mZoom=1,mSpin=!reduce,mRaf=0,drag=null;
+function openModal(id){mId=id;const it=ITEMS.find(i=>i.id===id),P=prep(id);
+  document.getElementById('mTitle').textContent=it.name;document.getElementById('mCat').textContent=it.cat;document.getElementById('mDesc').textContent=it.desc;
+  document.getElementById('mSize').textContent=`${P.size[0]} × ${P.size[1]} × ${P.size[2]} (largura × altura × profundidade)`;document.getElementById('mBlocks').textContent=P.count.toLocaleString('pt-BR');
+  document.getElementById('mInc').textContent=it.inc;document.getElementById('mPrice').innerHTML=priceHTML(it.price);
+  const sw=document.getElementById('mSw');sw.innerHTML='';Object.entries(P.colors).sort((a,b)=>b[1]-a[1]).slice(0,12).forEach(([c])=>{const i=document.createElement('i');i.style.background=c;sw.appendChild(i)});
+  updAdd();mYaw=-0.75;mPitch=0.55;mZoom=1;ov.classList.add('open');document.getElementById('mClose').focus();
+  cancelAnimationFrame(mRaf);let last=performance.now();const loop=t=>{if(mSpin&&!drag)mYaw+=(t-last)/1000*0.5;last=t;draw(mc,P,mYaw,mPitch,mZoom);mRaf=requestAnimationFrame(loop)};mRaf=requestAnimationFrame(loop)}
+function closeModal(){ov.classList.remove('open');cancelAnimationFrame(mRaf)}
+function updAdd(){const b=document.getElementById('mAdd');b.textContent=inCart(mId)?'Remover reserva':'Reservar';b.classList.toggle('done',inCart(mId))}
+document.getElementById('mClose').onclick=closeModal;ov.onclick=e=>{if(e.target===ov)closeModal()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeCart()}});
+mc.onpointerdown=e=>{drag=[e.clientX,e.clientY];mc.setPointerCapture(e.pointerId)};
+mc.onpointermove=e=>{if(!drag)return;mYaw+=(e.clientX-drag[0])*0.01;mPitch=Math.max(0.05,Math.min(1.45,mPitch+(e.clientY-drag[1])*0.008));drag=[e.clientX,e.clientY]};
+mc.onpointerup=()=>drag=null;mc.onwheel=e=>{e.preventDefault();mZoom=Math.max(0.5,Math.min(3,mZoom*(e.deltaY<0?1.1:0.9)))};
+document.getElementById('zIn').onclick=()=>mZoom=Math.min(3,mZoom*1.2);document.getElementById('zOut').onclick=()=>mZoom=Math.max(0.5,mZoom/1.2);
+document.getElementById('spin').onclick=e=>{mSpin=!mSpin;e.currentTarget.setAttribute('aria-pressed',mSpin)};
+document.getElementById('mAdd').onclick=()=>{toggleCart(mId);updAdd()};
+/* carrinho */
+const inCart=id=>cart.includes(id);
+function toggleCart(id){const i=cart.indexOf(id);i>=0?cart.splice(i,1):cart.push(id);renderCart();renderGrid()}
+const dr=document.getElementById('drawer');function openCart(){dr.classList.add('open');renderCart()}function closeCart(){dr.classList.remove('open')}
+document.getElementById('openCart').onclick=openCart;document.getElementById('cClose').onclick=closeCart;document.getElementById('install').onchange=renderCart;
+function renderCart(){document.getElementById('cartCount').textContent=cart.length;const box=document.getElementById('cItems');box.innerHTML='';
+  if(!cart.length)box.innerHTML='<p class="empty">Você ainda não reservou nada. Toque em Reservar no catálogo.</p>';
+  let total=0;for(const id of cart){const it=ITEMS.find(i=>i.id===id);total+=it.price;const row=document.createElement('div');row.className='line-item';
+    row.innerHTML=`<canvas></canvas><div><b>${it.name}</b><small>${it.cat}</small></div><div style="text-align:right"><div>${brl(it.price)}</div><button>remover</button></div>`;
+    row.querySelector('button').onclick=()=>toggleCart(id);box.appendChild(row);requestAnimationFrame(()=>draw(row.querySelector('canvas'),prep(id),-0.75,0.58))}
+  document.getElementById('cTotal').textContent=brl(total);const inst=document.getElementById('install').checked;
+  const msg=cart.length?`Olá! Quero RESERVAR na VilaPixel Builds (loja em breve):\n${cart.map(id=>{const it=ITEMS.find(i=>i.id===id);return`- ${it.name} (${brl(it.price)})`}).join('\n')}\nTotal: ${brl(total)}\n${inst?'Quero também a instalação no meu servidor (orçamento).':'Formato: .lvl (ClassiCube/MCGalaxy).'}`:'';
+  document.getElementById('cMsg').value=msg;document.getElementById('cWhats').href=cart.length?`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`:'#';}
+document.getElementById('cCopy').onclick=async e=>{const b=e.currentTarget;try{await navigator.clipboard.writeText(document.getElementById('cMsg').value);b.textContent='Reserva copiada ✓'}catch{b.textContent='Selecione o texto e copie'}setTimeout(()=>b.textContent='Copiar reserva',2000)};
+/* filtros */
+document.getElementById('q').oninput=e=>{query=e.target.value.trim().toLowerCase();renderGrid()};document.getElementById('sort').onchange=e=>{sort=e.target.value;renderGrid()};
+/* central de protecao */
+(()=>{const $=id=>document.getElementById(id);
+  $('lnkWhats').href=`https://wa.me/${WHATSAPP}`;$('whatsTxt').textContent=WHATSAPP_SHOW;if(/SEU-CONVITE/.test(DISCORD))$('lnkDiscord').hidden=true;else $('lnkDiscord').href=DISCORD;$('lnkInsta').href=INSTAGRAM;$('instaTxt').textContent=INSTAGRAM_SHOW;
+  const slug=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,14)||'item';
+  const types={protect:'Proteger construção',add:'Adicionar dono',remove:'Remover proteção',other:'Outro assunto'};
+  $('pform').addEventListener('submit',e=>{e.preventDefault();const nick=$('pNick').value.trim(),what=$('pWhat').value.trim(),type=document.querySelector('input[name=ptype]:checked').value;
+    $('eNick').textContent='';$('eWhat').textContent='';let ok=true;
+    if(!nick||/\s/.test(nick)){$('eNick').textContent='Digite seu nick do jogo (sem espaços).';ok=false}
+    if(type!=='other'&&!what){$('eWhat').textContent='Diga qual é a construção.';ok=false}if(!ok)return;
+    const world=$('pWorld').value,where=$('pWhere').value.trim(),coords=$('pCoords').value.trim(),co=$('pCo').value.split(',').map(s=>s.trim()).filter(Boolean),contact=$('pContact').value.trim(),msg=$('pMsg').value.trim(),age=$('pAge').value;
+    const d=new Date(),ticket='VP-'+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+    const zone=(slug(nick).slice(0,10)+'_'+slug(what)).slice(0,24);
+    const L=[`*PEDIDO VILAPIXEL* ${ticket}`,`Tipo: ${types[type]}`,`Nick: ${nick}`,`Mundo: ${world}`];
+    if(what)L.push(`Construção: ${what}`);if(where)L.push(`Local: ${where}`);if(coords)L.push(`Posição: ${coords}`);if(co.length)L.push(`Outros donos: ${co.join(', ')}`);
+    if(contact)L.push(`Contato: ${contact}`);L.push(`Idade: ${age==='adult'?'18+':'menor de 18 (responsável ciente)'}`);if(msg)L.push(`Mensagem: ${msg}`);
+    const C=[];if(type==='protect'){C.push(`/goto ${world==='outro'?'MUNDO':world}`);if(coords)C.push(`/tp ${coords.replace(/[^0-9\- ,]/g,'').replace(/,/g,' ').replace(/\s+/g,' ').trim()}`);
+      C.push(`/zone add ${zone} operator   (clique nos 2 cantos opostos)`);C.push(`/zone perbuild ${zone} +${nick}`);co.forEach(c=>C.push(`/zone perbuild ${zone} +${c}`))}
+    if(type==='add'){C.push('/zonelist');(co.length?co:['NICK']).forEach(c=>C.push(`/zone perbuild NOME_DA_ZONA +${c}`))}
+    if(type==='remove'){C.push('/zonelist','/zone del NOME_DA_ZONA')}
+    if(C.length)L.push('','— Comandos para o Prefeito —',...C);
+    const text=L.join('\n');$('pOut').textContent=text;$('pTicket').textContent=ticket;$('pSend').href=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+    $('pResult').classList.add('show');$('pResult').scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})});
+  $('pCopy').onclick=async()=>{const b=$('pCopy');try{await navigator.clipboard.writeText($('pOut').textContent);b.textContent='Copiado ✓'}catch(e){b.textContent='Selecione o texto e copie'}setTimeout(()=>b.textContent='Copiar pedido',2000)};
+})();
+/* inicio */
+renderChips();renderGrid();renderCart();requestAnimationFrame(heroLoop);
+let tb=0;for(const it of ITEMS)tb+=prep(it.id).count;document.getElementById('statItems').textContent=ITEMS.length;document.getElementById('statBlocks').textContent=tb.toLocaleString('pt-BR');
+window.addEventListener('resize',()=>{document.querySelectorAll('.card canvas').forEach(cv=>draw(cv,prep(cv.dataset.id),-0.75,0.58))});
+</script>
+</body>
+</html>

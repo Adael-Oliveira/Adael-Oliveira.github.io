@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Central VilaPixel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Mesmo mundo visual da VilaPixel Builds: azul-ceu frio, tinta azul-marinho, acento laranja, verde-grama para "protegido".
+     Layout: faixa de idioma, cabecalho, duas colunas (contato | formulario), resultado do pedido abaixo do formulario. */
+  --bg:#eaf1f8; --surface:#ffffff; --ink:#14213d; --muted:#5b6b86; --line:#d3deeb;
+  --accent:#e8622c; --accent-ink:#ffffff; --grass:#3f9b4f; --sky:#cfe3f6;
+  --font-display:"Pixelify Sans","Courier New",monospace;
+  --font-body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0f1626;--surface:#17213a;--ink:#e8eef8;--muted:#9fb0cc;--line:#283656;--accent:#ff7a45;--accent-ink:#1a0f08;--grass:#5cc46c;--sky:#1b2a47;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#0f1626;--surface:#17213a;--ink:#e8eef8;--muted:#9fb0cc;--line:#283656;--accent:#ff7a45;--accent-ink:#1a0f08;--grass:#5cc46c;--sky:#1b2a47;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.5}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;margin:0;text-wrap:balance}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.top{border-bottom:1px solid var(--line);background:var(--surface)}
+.top .wrap{display:flex;align-items:center;gap:14px;min-height:64px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{width:28px;height:28px;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.mark i{border-radius:2px}
+.brand b{font-family:var(--font-display);font-size:22px}
+.brand small{display:block;font-size:11px;color:var(--muted);margin-top:-4px}
+.langs{margin-left:auto;display:flex;gap:6px}
+.langs button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 12px;font-weight:800;font-size:13px;cursor:pointer}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.intro{padding:32px 0 8px}
+.intro h1{font-size:clamp(30px,4.5vw,46px);line-height:1.05}
+.intro p{color:var(--muted);max-width:62ch;font-size:17px;margin:10px 0 0}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;font-weight:700;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--grass);box-shadow:0 0 0 3px color-mix(in srgb,var(--grass) 25%,transparent)}
+.cols{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;padding:22px 0 40px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.panel h2{font-size:22px;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.contact{display:flex;flex-direction:column;gap:10px}
+.c-item{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none}
+.c-item:hover{border-color:var(--ink)}
+.c-ico{width:38px;height:38px;border-radius:8px;display:grid;place-items:center;font-family:var(--font-display);font-size:18px;color:#fff;flex:none}
+.c-item b{display:block;font-size:15px}
+.c-item small{color:var(--muted);font-size:13px}
+.server{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;font-size:14px}
+.server code{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:13px}
+.rules{margin:14px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.rules li{margin:4px 0}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f{display:flex;flex-direction:column;gap:5px}
+.f.full{grid-column:1/-1}
+label{font-weight:700;font-size:14px}
+label .opt{font-weight:400;color:var(--muted)}
+input,select,textarea{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:9px 11px;width:100%}
+textarea{min-height:84px;resize:vertical}
+.help{font-size:12px;color:var(--muted)}
+.err{font-size:12px;color:var(--accent);font-weight:700;min-height:0}
+.types{display:flex;gap:8px;flex-wrap:wrap}
+.types label{display:flex;align-items:center;gap:6px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;background:var(--bg)}
+.types input{width:auto}
+.types label:has(input:checked){border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.actions{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:8px;padding:10px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.result{display:none;margin-top:18px;border:2px solid var(--grass);border-radius:12px;padding:16px;background:color-mix(in srgb,var(--grass) 8%,var(--surface))}
+.result.show{display:block}
+.result h3{font-size:20px;margin-bottom:6px}
+.result pre{white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:13px;max-height:260px;overflow:auto;margin:10px 0}
+.ticket{font-family:var(--font-display);font-size:18px}
+.note{font-size:12px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:20px 0 36px;color:var(--muted);font-size:13px}
+@media (max-width:820px){.cols{grid-template-columns:1fr}form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><i style="background:#e8622c"></i><i style="background:#3f9b4f"></i><i style="background:#3557d6"></i><i style="background:#f4c430"></i></span>
+      <span><b>Central VilaPixel</b><small data-t="tagline">Fale com o Prefeito</small></span>
+    </div>
+    <div class="langs" role="group" aria-label="Idioma / Language">
+      <button data-lang="pt" aria-pressed="true">PT</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="es" aria-pressed="false">ES</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1 data-t="h1">Fale comigo e proteja sua construção</h1>
+    <p data-t="intro">Tire dúvidas, dê sugestões ou peça proteção para o que você construiu na VilaPixel. Com a proteção, só você (e quem você escolher) consegue quebrar ou mexer.</p>
+    <span class="status"><i></i><span data-t="online">Servidor online · procure "VilaPixel" na lista do ClassiCube</span></span>
+  </section>
+
+  <div class="cols">
+    <aside class="panel">
+      <h2 data-t="talk">Fale comigo</h2>
+      <p class="sub" data-t="talkSub">Respondo assim que puder. Em português, English ou español.</p>
+      <div class="contact">
+        <a class="c-item" id="lnkWhats" href="#" target="_blank" rel="noopener">
+          <span class="c-ico" style="background:#25a35a">W</span>
+          <span><b>WhatsApp</b><small id="whatsTxt"></small></span>
+        </a>
+        <a class="c-item" id="lnkDiscord" href="#" target="_blank" rel="noopener">
+          <span class="c-ico" style="background:#5865f2">D</span>
+          <span><b>Discord</b><small data-t="discordSub">Comunidade VilaPixel</small></span>
+        </a>
+        <a class="c-item" id="lnkInsta" href="#" target="_blank" rel="noopener">
+          <span class="c-ico" style="background:#d6336c">I</span>
+          <span><b>Instagram</b><small id="instaTxt"></small></span>
+        </a>
+        <div class="c-item" style="cursor:default">
+          <span class="c-ico" style="background:#e8622c">@</span>
+          <span><b data-t="inGame">No jogo</b><small data-t="inGameSub">Mande mensagem privada: @PrefeitoPixel sua mensagem</small></span>
+        </div>
+      </div>
+      <div class="server">
+        <b data-t="howJoin">Como entrar no servidor</b>
+        <ul class="rules">
+          <li data-t="join1">Abra o ClassiCube e procure VilaPixel na lista.</li>
+          <li data-t="join2">Leia as regras com /rules e aceite com /agree.</li>
+          <li data-t="join3">Visitantes constroem livremente no mundo /goto construcao.</li>
+        </ul>
+      </div>
+      <div class="server">
+        <b data-t="protRules">Regras da proteção</b>
+        <ul class="rules">
+          <li data-t="pr1">A proteção é gratuita para jogadores que seguem as regras.</li>
+          <li data-t="pr2">Só protejo construções feitas por você.</li>
+          <li data-t="pr3">Construções abandonadas ou que atrapalhem outros podem perder a proteção.</li>
+          <li data-t="pr4">Nunca vou pedir sua senha. Nunca digite comandos que outro jogador mandar.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <section class="panel" aria-labelledby="formTitle">
+      <h2 id="formTitle" data-t="formTitle">Pedir proteção de construção</h2>
+      <p class="sub" data-t="formSub">Preencha e envie. O pedido chega para o Prefeito com tudo pronto para ativar a proteção.</p>
+      <form id="form" novalidate>
+        <div class="f">
+          <label for="nick"><span data-t="nick">Seu nick no jogo</span></label>
+          <input id="nick" autocomplete="off" placeholder="AnaSofia" required>
+          <span class="help" data-t="nickHelp">Exatamente igual ao do jogo, com maiúsculas e minúsculas.</span>
+          <span class="err" id="eNick"></span>
+        </div>
+        <div class="f">
+          <label for="world"><span data-t="world">Mundo</span></label>
+          <select id="world">
+            <option value="vilapixel">vilapixel</option>
+            <option value="construcao">construcao</option>
+            <option value="ilha">ilha</option>
+            <option value="outro" data-t="other">outro</option>
+          </select>
+        </div>
+        <div class="f full">
+          <span style="font-weight:700;font-size:14px" data-t="type">Tipo de pedido</span>
+          <div class="types" role="radiogroup">
+            <label><input type="radio" name="type" value="protect" checked> <span data-t="tProtect">Proteger construção</span></label>
+            <label><input type="radio" name="type" value="add"> <span data-t="tAdd">Adicionar dono</span></label>
+            <label><input type="radio" name="type" value="remove"> <span data-t="tRemove">Remover proteção</span></label>
+            <label><input type="radio" name="type" value="other"> <span data-t="tOther">Outro assunto</span></label>
+          </div>
+        </div>
+        <div class="f">
+          <label for="what"><span data-t="what">O que é a construção?</span></label>
+          <input id="what" placeholder="Carro rosa" required>
+          <span class="err" id="eWhat"></span>
+        </div>
+        <div class="f">
+          <label for="where"><span data-t="where">Onde fica?</span></label>
+          <input id="where" placeholder="Ao lado da casa moderna, perto da praia">
+        </div>
+        <div class="f">
+          <label for="coords"><span data-t="coords">Posição</span> <span class="opt" data-t="optional">(opcional)</span></label>
+          <input id="coords" placeholder="168, 47, 208">
+          <span class="help" data-t="coordsHelp">Os números de "Position" que aparecem no canto da tela, se você souber.</span>
+        </div>
+        <div class="f">
+          <label for="co"><span data-t="co">Outros donos</span> <span class="opt" data-t="optional">(opcional)</span></label>
+          <input id="co" placeholder="kaiookk1, Amigo123">
+          <span class="help" data-t="coHelp">Nicks que também podem mexer, separados por vírgula.</span>
+        </div>
+        <div class="f">
+          <label for="contact"><span data-t="contact">Seu contato</span> <span class="opt" data-t="optional">(opcional)</span></label>
+          <input id="contact" placeholder="Discord, e-mail ou WhatsApp">
+        </div>
+        <div class="f">
+          <label for="age"><span data-t="age">Idade</span></label>
+          <select id="age">
+            <option value="adult" data-t="adult">18 anos ou mais</option>
+            <option value="minor" data-t="minor">Menos de 18 (um responsável sabe)</option>
+          </select>
+        </div>
+        <div class="f full">
+          <label for="msg"><span data-t="msg">Mensagem</span> <span class="opt" data-t="optional">(opcional)</span></label>
+          <textarea id="msg" data-tp="msgPh" placeholder="Conte o que precisar."></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn primary" type="submit" data-t="send">Gerar pedido</button>
+          <span class="note" data-t="privacy">Não peça nem envie senhas. Seus dados só vão para a conversa com o Prefeito.</span>
+        </div>
+      </form>
+
+      <div class="result" id="result" aria-live="polite">
+        <h3 data-t="ready">Pedido pronto!</h3>
+        <div class="ticket" id="ticket"></div>
+        <p class="note" data-t="readySub">Envie pelo WhatsApp ou copie e mande no Discord. O Prefeito ativa a proteção e avisa você no jogo.</p>
+        <pre id="out"></pre>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" id="sendWhats" href="#" target="_blank" rel="noopener" data-t="sendWhats">Enviar pelo WhatsApp</a>
+          <button class="btn dark" id="copy" type="button" data-t="copy">Copiar pedido</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">VilaPixel · Adael Oliveira · <span data-t="foot">Não afiliado à Mojang, Microsoft ou ClassiCube.</span></div>
+</footer>
+
+<script>
+/* ================== CONFIGURE AQUI ================== */
+const CONFIG = {
+  whatsapp: "5519983332894",                 // DDI + DDD + numero, sem espacos
+  whatsappShow: "(19) 98333-2894",
+  discord: "https://discord.gg/SEU-CONVITE",
+  instagram: "https://instagram.com/dev_adaeloliveira",
+  instagramShow: "@dev_adaeloliveira"
+};
+/* ==================================================== */
+
+const T={
+ pt:{tagline:"Fale com o Prefeito",h1:"Fale comigo e proteja sua construção",intro:"Tire dúvidas, dê sugestões ou peça proteção para o que você construiu na VilaPixel. Com a proteção, só você (e quem você escolher) consegue quebrar ou mexer.",online:'Servidor online · procure "VilaPixel" na lista do ClassiCube',talk:"Fale comigo",talkSub:"Respondo assim que puder. Em português, English ou español.",discordSub:"Comunidade VilaPixel",inGame:"No jogo",inGameSub:"Mande mensagem privada: @PrefeitoPixel sua mensagem",howJoin:"Como entrar no servidor",join1:"Abra o ClassiCube e procure VilaPixel na lista.",join2:"Leia as regras com /rules e aceite com /agree.",join3:"Visitantes constroem livremente no mundo /goto construcao.",protRules:"Regras da proteção",pr1:"A proteção é gratuita para jogadores que seguem as regras.",pr2:"Só protejo construções feitas por você.",pr3:"Construções abandonadas ou que atrapalhem outros podem perder a proteção.",pr4:"Nunca vou pedir sua senha. Nunca digite comandos que outro jogador mandar.",formTitle:"Pedir proteção de construção",formSub:"Preencha e envie. O pedido chega para o Prefeito com tudo pronto para ativar a proteção.",nick:"Seu nick no jogo",nickHelp:"Exatamente igual ao do jogo, com maiúsculas e minúsculas.",world:"Mundo",other:"outro",type:"Tipo de pedido",tProtect:"Proteger construção",tAdd:"Adicionar dono",tRemove:"Remover proteção",tOther:"Outro assunto",what:"O que é a construção?",where:"Onde fica?",coords:"Posição",optional:"(opcional)",coordsHelp:'Os números de "Position" que aparecem no canto da tela, se você souber.',co:"Outros donos",coHelp:"Nicks que também podem mexer, separados por vírgula.",contact:"Seu contato",age:"Idade",adult:"18 anos ou mais",minor:"Menos de 18 (um responsável sabe)",msg:"Mensagem",msgPh:"Conte o que precisar.",send:"Gerar pedido",privacy:"Não peça nem envie senhas. Seus dados só vão para a conversa com o Prefeito.",ready:"Pedido pronto!",readySub:"Envie pelo WhatsApp ou copie e mande no Discord. O Prefeito ativa a proteção e avisa você no jogo.",sendWhats:"Enviar pelo WhatsApp",copy:"Copiar pedido",copied:"Copiado ✓",copyFail:"Selecione o texto e copie",foot:"Não afiliado à Mojang, Microsoft ou ClassiCube.",eNick:"Digite seu nick do jogo (sem espaços).",eWhat:"Diga qual é a construção.",
+   L:{title:"PEDIDO VILAPIXEL",type:"Tipo",nick:"Nick",world:"Mundo",what:"Construção",where:"Local",coords:"Posição",co:"Outros donos",contact:"Contato",age:"Idade",msg:"Mensagem",cmds:"Comandos para o Prefeito",types:{protect:"Proteger construção",add:"Adicionar dono",remove:"Remover proteção",other:"Outro assunto"},adult:"18+",minor:"menor de 18 (responsável ciente)",step:"clique nos 2 cantos opostos da construção"}},
+ en:{tagline:"Talk to the Mayor",h1:"Talk to me and protect your build",intro:"Ask questions, send ideas or request protection for what you built on VilaPixel. Once protected, only you (and who you choose) can break or change it.",online:'Server online · search "VilaPixel" in the ClassiCube list',talk:"Talk to me",talkSub:"I reply as soon as I can. Português, English or español.",discordSub:"VilaPixel community",inGame:"In game",inGameSub:"Send a private message: @PrefeitoPixel your message",howJoin:"How to join",join1:"Open ClassiCube and find VilaPixel in the server list.",join2:"Read the rules with /rules and accept with /agree.",join3:"Visitors can build freely in /goto construcao.",protRules:"Protection rules",pr1:"Protection is free for players who follow the rules.",pr2:"I only protect builds you made yourself.",pr3:"Abandoned builds or builds that bother others may lose protection.",pr4:"I will never ask for your password. Never type commands another player tells you to.",formTitle:"Request build protection",formSub:"Fill in and send. The Mayor gets your request with everything ready to turn protection on.",nick:"Your in-game name",nickHelp:"Exactly as in the game, same upper and lower case.",world:"World",other:"other",type:"Request type",tProtect:"Protect a build",tAdd:"Add an owner",tRemove:"Remove protection",tOther:"Something else",what:"What is the build?",where:"Where is it?",coords:"Position",optional:"(optional)",coordsHelp:'The "Position" numbers shown in the corner of the screen, if you know them.',co:"Other owners",coHelp:"Names who can also edit, separated by commas.",contact:"Your contact",age:"Age",adult:"18 or older",minor:"Under 18 (a parent knows)",msg:"Message",msgPh:"Tell me what you need.",send:"Create request",privacy:"Never ask for or send passwords. Your info only goes to the chat with the Mayor.",ready:"Request ready!",readySub:"Send it on WhatsApp or copy it to Discord. The Mayor turns protection on and tells you in game.",sendWhats:"Send on WhatsApp",copy:"Copy request",copied:"Copied ✓",copyFail:"Select the text and copy it",foot:"Not affiliated with Mojang, Microsoft or ClassiCube.",eNick:"Type your in-game name (no spaces).",eWhat:"Tell me what the build is.",
+   L:{title:"VILAPIXEL REQUEST",type:"Type",nick:"Name",world:"World",what:"Build",where:"Place",coords:"Position",co:"Other owners",contact:"Contact",age:"Age",msg:"Message",cmds:"Commands for the Mayor",types:{protect:"Protect a build",add:"Add an owner",remove:"Remove protection",other:"Something else"},adult:"18+",minor:"under 18 (parent aware)",step:"click the 2 opposite corners of the build"}},
+ es:{tagline:"Habla con el Alcalde",h1:"Habla conmigo y protege tu construcción",intro:"Haz preguntas, manda ideas o pide protección para lo que construiste en VilaPixel. Con la protección, solo tú (y quien elijas) puede romperlo o cambiarlo.",online:'Servidor en línea · busca "VilaPixel" en la lista de ClassiCube',talk:"Habla conmigo",talkSub:"Respondo lo antes posible. Português, English o español.",discordSub:"Comunidad VilaPixel",inGame:"En el juego",inGameSub:"Manda un mensaje privado: @PrefeitoPixel tu mensaje",howJoin:"Cómo entrar",join1:"Abre ClassiCube y busca VilaPixel en la lista.",join2:"Lee las reglas con /rules y acepta con /agree.",join3:"Los visitantes construyen libremente en /goto construcao.",protRules:"Reglas de protección",pr1:"La protección es gratis para quien sigue las reglas.",pr2:"Solo protejo construcciones hechas por ti.",pr3:"Las construcciones abandonadas o que molesten a otros pueden perder la protección.",pr4:"Nunca te pediré tu contraseña. Nunca escribas comandos que otro jugador te diga.",formTitle:"Pedir protección de construcción",formSub:"Completa y envía. El Alcalde recibe tu pedido con todo listo para activar la protección.",nick:"Tu nombre en el juego",nickHelp:"Igual que en el juego, con mayúsculas y minúsculas.",world:"Mundo",other:"otro",type:"Tipo de pedido",tProtect:"Proteger construcción",tAdd:"Agregar dueño",tRemove:"Quitar protección",tOther:"Otro asunto",what:"¿Qué es la construcción?",where:"¿Dónde está?",coords:"Posición",optional:"(opcional)",coordsHelp:'Los números de "Position" en la esquina de la pantalla, si los sabes.',co:"Otros dueños",coHelp:"Nombres que también pueden editar, separados por comas.",contact:"Tu contacto",age:"Edad",adult:"18 años o más",minor:"Menos de 18 (un adulto lo sabe)",msg:"Mensaje",msgPh:"Cuéntame lo que necesitas.",send:"Crear pedido",privacy:"Nunca pidas ni envíes contraseñas. Tus datos solo van a la conversación con el Alcalde.",ready:"¡Pedido listo!",readySub:"Envíalo por WhatsApp o cópialo en Discord. El Alcalde activa la protección y te avisa en el juego.",sendWhats:"Enviar por WhatsApp",copy:"Copiar pedido",copied:"Copiado ✓",copyFail:"Selecciona el texto y cópialo",foot:"No afiliado a Mojang, Microsoft ni ClassiCube.",eNick:"Escribe tu nombre del juego (sin espacios).",eWhat:"Di qué es la construcción.",
+   L:{title:"PEDIDO VILAPIXEL",type:"Tipo",nick:"Nombre",world:"Mundo",what:"Construcción",where:"Lugar",coords:"Posición",co:"Otros dueños",contact:"Contacto",age:"Edad",msg:"Mensaje",cmds:"Comandos para el Alcalde",types:{protect:"Proteger construcción",add:"Agregar dueño",remove:"Quitar protección",other:"Otro asunto"},adult:"18+",minor:"menor de 18 (adulto al tanto)",step:"clic en las 2 esquinas opuestas"}}
+};
+let lang='pt';
+try{const s=localStorage.getItem('vp_lang');if(s&&T[s])lang=s;else if(/^es/i.test(navigator.language))lang='es';else if(!/^pt/i.test(navigator.language))lang='en'}catch(e){}
+
+function applyLang(){const d=T[lang];document.documentElement.lang=lang==='pt'?'pt-BR':lang;
+  document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t;if(d[k]!=null)el.textContent=d[k]});
+  document.querySelectorAll('[data-tp]').forEach(el=>{el.placeholder=d[el.dataset.tp]});
+  document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang));
+  try{localStorage.setItem('vp_lang',lang)}catch(e){}
+  if(document.getElementById('result').classList.contains('show'))build();}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;applyLang()});
+
+/* contatos */
+const wa=document.getElementById('lnkWhats');wa.href=`https://wa.me/${CONFIG.whatsapp}`;document.getElementById('whatsTxt').textContent=CONFIG.whatsappShow;
+if(/SEU-CONVITE/.test(CONFIG.discord))document.getElementById('lnkDiscord').hidden=true;else document.getElementById('lnkDiscord').href=CONFIG.discord;document.getElementById('lnkInsta').href=CONFIG.instagram;document.getElementById('instaTxt').textContent=CONFIG.instagramShow;
+
+/* pedido */
+const $=id=>document.getElementById(id);
+const slug=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,14)||'item';
+function ticketId(){const d=new Date();return 'VP-'+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+Math.random().toString(36).slice(2,6).toUpperCase()}
+let ticket='';
+function build(){const d=T[lang],L=d.L;const nick=$('nick').value.trim(),what=$('what').value.trim(),where=$('where').value.trim(),coords=$('coords').value.trim(),
+  co=$('co').value.split(',').map(s=>s.trim()).filter(Boolean),contact=$('contact').value.trim(),msg=$('msg').value.trim(),world=$('world').value,
+  type=document.querySelector('input[name=type]:checked').value,age=$('age').value;
+  const zone=(slug(nick).slice(0,10)+'_'+slug(what)).slice(0,24);
+  const lines=[`*${L.title}* ${ticket}`,`${L.type}: ${L.types[type]}`,`${L.nick}: ${nick}`,`${L.world}: ${world}`];
+  if(what)lines.push(`${L.what}: ${what}`);if(where)lines.push(`${L.where}: ${where}`);if(coords)lines.push(`${L.coords}: ${coords}`);
+  if(co.length)lines.push(`${L.co}: ${co.join(', ')}`);if(contact)lines.push(`${L.contact}: ${contact}`);lines.push(`${L.age}: ${age==='adult'?L.adult:L.minor}`);
+  if(msg)lines.push(`${L.msg}: ${msg}`);
+  const cmds=[];
+  if(type==='protect'){cmds.push(`/goto ${world==='outro'?'MUNDO':world}`);if(coords)cmds.push(`/tp ${coords.replace(/[^0-9\- ,]/g,'').replace(/,/g,' ').replace(/\s+/g,' ').trim()}`);
+    cmds.push(`/zone add ${zone} operator   (${L.step})`);cmds.push(`/zone perbuild ${zone} +${nick}`);co.forEach(c=>cmds.push(`/zone perbuild ${zone} +${c}`));}
+  if(type==='add'){cmds.push(`/zonelist`);co.forEach(c=>cmds.push(`/zone perbuild NOME_DA_ZONA +${c}`));if(!co.length)cmds.push(`/zone perbuild NOME_DA_ZONA +NICK`)}
+  if(type==='remove'){cmds.push(`/zonelist`);cmds.push(`/zone del NOME_DA_ZONA`)}
+  if(cmds.length){lines.push('');lines.push(`— ${L.cmds} —`);lines.push(...cmds)}
+  const text=lines.join('\n');$('out').textContent=text;$('ticket').textContent=ticket;$('sendWhats').href=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;return text}
+$('form').addEventListener('submit',e=>{e.preventDefault();const d=T[lang];let ok=true;const nick=$('nick').value.trim();
+  $('eNick').textContent='';$('eWhat').textContent='';
+  if(!nick||/\s/.test(nick)){$('eNick').textContent=d.eNick;ok=false}
+  const type=document.querySelector('input[name=type]:checked').value;if(type!=='other'&&!$('what').value.trim()){$('eWhat').textContent=d.eWhat;ok=false}
+  if(!ok)return;ticket=ticketId();build();$('result').classList.add('show');$('result').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'})});
+$('copy').onclick=async()=>{const b=$('copy'),d=T[lang];try{await navigator.clipboard.writeText($('out').textContent);b.textContent=d.copied}catch(e){b.textContent=d.copyFail}setTimeout(()=>b.textContent=d.copy,2000)};
+applyLang();
+</script>
+</body>
+</html>
